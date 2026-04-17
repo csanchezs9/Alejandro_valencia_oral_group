@@ -23,7 +23,7 @@ const LABEL_W = Math.round(OUTER_W * PHONE_SCALE);
 function Screen1() {
   const days = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
   return (
-    <div className="flex flex-col h-full bg-[#f5f5f7] text-[#1c1c1e]">
+    <div className="flex flex-col h-full bg-white text-[#1c1c1e]">
       <div className="bg-white px-6 pt-5 pb-5 border-b border-black/5">
         <p className="text-[15px] text-[#8e8e93] font-semibold uppercase tracking-widest mb-1.5">Tu cita</p>
         <p className="text-[26px] font-black leading-tight tracking-tight">Valoración inicial</p>
@@ -43,7 +43,7 @@ function Screen1() {
               <p className="text-[14px] text-[#8e8e93] font-medium">10:00 AM · 45 min</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 bg-[#f5f5f7] rounded-xl px-3 py-2">
+          <div className="flex items-center gap-2 bg-white rounded-xl px-3 py-2">
             <Clock className="w-4 h-4 text-[color:var(--turquoise)]" />
             <p className="text-[13px] text-[#3c3c43] font-medium">Diagnóstico completo incluido</p>
           </div>
@@ -87,7 +87,7 @@ function Screen2() {
     { label: "Inicio tratamiento",      done: false },
   ];
   return (
-    <div className="flex flex-col h-full bg-[#f5f5f7] text-[#1c1c1e]">
+    <div className="flex flex-col h-full bg-white text-[#1c1c1e]">
       <div className="bg-white px-6 pt-5 pb-5 border-b border-black/5">
         <p className="text-[15px] text-[#8e8e93] font-semibold uppercase tracking-widest mb-1.5">Tu plan</p>
         <p className="text-[26px] font-black leading-tight tracking-tight">Plan de tratamiento</p>
@@ -124,7 +124,7 @@ function Screen2() {
 
 function Screen3() {
   return (
-    <div className="flex flex-col h-full bg-[#f5f5f7] text-[#1c1c1e]">
+    <div className="flex flex-col h-full bg-white text-[#1c1c1e]">
       <div className="bg-white px-6 pt-5 pb-5 border-b border-black/5">
         <p className="text-[15px] text-[#8e8e93] font-semibold uppercase tracking-widest mb-1.5">Resultado</p>
         <p className="text-[26px] font-black leading-tight tracking-tight">Tu nueva sonrisa</p>
@@ -169,8 +169,9 @@ function Phone({ children, shadow }: { children: React.ReactNode; shadow?: strin
           color="space-black"
           scale={PHONE_SCALE}
           shadow={shadow ?? "0 24px 60px rgba(0,0,0,0.55), 0 4px 12px rgba(0,0,0,0.3)"}
-          screenBg="#f5f5f7"
+          screenBg="#ffffff"
           safeArea
+          innerShadow={false}
         >
           {children}
         </IPhoneMockup>
@@ -206,51 +207,52 @@ export default function Process() {
           trigger: sectionRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1.5,
+          scrub: 1.2,
         },
+        defaults: { ease: "power3.inOut" },
       });
 
       tl.fromTo(groupRef.current,
-        { y: 70 },
-        { y: 0, ease: "power2.out", duration: 1.1 },
+        { y: 90, scale: 0.96 },
+        { y: 0, scale: 1, ease: "power3.out", duration: 1.4 },
         0,
       );
 
       tl.fromTo(headRef.current,
-        { opacity: 1, y: 0 },
-        { opacity: 0, y: -44, ease: "power1.in", duration: 1.6 },
+        { opacity: 1, y: 0, filter: "blur(0px)" },
+        { opacity: 0, y: -52, filter: "blur(4px)", ease: "power2.in", duration: 1.8 },
         0,
       );
 
       tl.fromTo(hintRef.current,
         { opacity: 1 },
-        { opacity: 0, ease: "power1.in", duration: 0.5 },
+        { opacity: 0, ease: "power1.in", duration: 0.4 },
         0,
       );
 
       tl.fromTo(leftRef.current,
-        { x: "0%", rotateY: -16, scale: 0.80 },
-        { x: "-142%", rotateY: 0, scale: 1, ease: "power2.inOut", duration: 3.8 },
+        { x: "0%", rotateY: -22, scale: 0.76, opacity: 0.85 },
+        { x: "-142%", rotateY: 0, scale: 1, opacity: 1, duration: 4 },
         0,
       );
 
       tl.fromTo(rightRef.current,
-        { x: "0%", rotateY: 16, scale: 0.80 },
-        { x: "142%", rotateY: 0, scale: 1, ease: "power2.inOut", duration: 3.8 },
+        { x: "0%", rotateY: 22, scale: 0.76, opacity: 0.85 },
+        { x: "142%", rotateY: 0, scale: 1, opacity: 1, duration: 4 },
         0,
       );
 
       tl.fromTo(centerRef.current,
-        { y: 0, scale: 0.90 },
-        { y: 0, scale: 1, ease: "power2.out", duration: 3.8 },
+        { y: 20, scale: 0.88, rotateX: 6 },
+        { y: 0, scale: 1, rotateX: 0, ease: "power3.out", duration: 4 },
         0,
       );
 
       tl.fromTo(
         [label1Ref.current, label2Ref.current, label3Ref.current],
-        { opacity: 0, y: 22 },
-        { opacity: 1, y: 0, stagger: 0.18, ease: "power2.out", duration: 1.5 },
-        3.0,
+        { opacity: 0, y: 28, filter: "blur(6px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", stagger: 0.22, ease: "power2.out", duration: 1.6 },
+        3.2,
       );
     }, sectionRef);
 

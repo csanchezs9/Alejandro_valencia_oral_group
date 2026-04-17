@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Calendar } from "lucide-react";
+import { Menu, X, Calendar, MapPin, Phone } from "lucide-react";
 import { clinic } from "@/lib/data/clinic";
 
 const links = [
@@ -33,8 +33,46 @@ export default function Navbar() {
       initial={{ y: -32, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 inset-x-0 z-50 bg-white/85 backdrop-blur-md border-b border-[color:var(--turquoise-soft)] shadow-[0_8px_30px_rgba(11,43,58,0.06)] transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}
+      className={`fixed top-0 inset-x-0 z-50 transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}
     >
+      {/* ── Top info bar ── */}
+      <div className="relative bg-white border-b border-gray-200 text-xs text-gray-900 py-2.5 px-5 sm:px-8">
+
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          {/* Left: address */}
+          <span className="hidden sm:flex items-center gap-1.5 truncate">
+            <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-gray-900" />
+            {clinic.clinic.city}, Colombia &nbsp;{clinic.clinic.street}, {clinic.clinic.name}, {clinic.clinic.suite}
+          </span>
+          <span className="sm:hidden flex items-center gap-1.5">
+            <MapPin className="w-3.5 h-3.5 text-gray-900 flex-shrink-0" />
+            {clinic.clinic.city}, Colombia
+          </span>
+
+          {/* Right: phone + instagram */}
+          <div className="flex items-center gap-4 flex-shrink-0">
+            <a
+              href={`tel:${clinic.contact.phoneTel}`}
+              className="flex items-center gap-1.5 hover:text-gray-800 transition-colors"
+            >
+              <Phone className="w-3.5 h-3.5 text-gray-900" />
+              Citas: {clinic.contact.phone}
+            </a>
+            <a
+              href={clinic.contact.instagram}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:opacity-75 transition-opacity"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/iconig.png" alt="Instagram" className="w-4 h-4 object-contain" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Main nav ── */}
+      <div className="bg-white/85 backdrop-blur-md border-b border-[color:var(--turquoise-soft)] shadow-[0_8px_30px_rgba(11,43,58,0.06)]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 md:h-20 flex items-center justify-between">
         <a href="#top" className="group">
           <div className="font-display font-bold text-[color:var(--ink)] text-base">Odont. Alejandro Valencia Toro</div>
@@ -68,6 +106,7 @@ export default function Navbar() {
             {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
+      </div>
       </div>
 
       <AnimatePresence>

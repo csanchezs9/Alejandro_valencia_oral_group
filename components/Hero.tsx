@@ -1,178 +1,125 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { Calendar, MessageCircle, ShieldCheck, Star } from "lucide-react";
+import { motion } from "framer-motion";
 import { clinic } from "@/lib/data/clinic";
 
 export default function Hero() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const yImg = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const yText = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
-
   return (
     <section
       id="top"
-      ref={ref}
-      className="relative overflow-hidden hero-bg pt-28 md:pt-36 pb-16 md:pb-24"
+      className="relative overflow-hidden bg-white"
+      style={{ minHeight: "clamp(560px, 90vh, 800px)" }}
     >
-      <div className="absolute inset-0 mesh-glow opacity-70 pointer-events-none" />
-      <div className="absolute top-20 right-10 w-72 h-72 rounded-full bg-[color:var(--turquoise)]/10 blur-3xl" />
-
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-        <motion.div style={{ y: yText }} className="relative z-10">
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-display font-extrabold text-[color:var(--ink)] text-4xl sm:text-5xl lg:text-[56px] leading-[1.05]"
+      <div
+        className="max-w-7xl mx-auto px-6 sm:px-10 grid lg:grid-cols-[48%_52%] h-full"
+        style={{ minHeight: "inherit" }}
+      >
+        {/* ── LEFT: copy ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col justify-center pt-36 pb-10 lg:pb-16 z-10"
+        >
+          <h1
+            className="font-display font-extrabold leading-[1.06]"
+            style={{
+              fontSize: "clamp(2.6rem, 5vw, 4rem)",
+              color: "var(--turquoise)",
+            }}
           >
-            La sonrisa que siempre soñaste,{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10 bg-gradient-to-r from-[color:var(--turquoise-deep)] to-[color:var(--turquoise)] bg-clip-text text-transparent">
-                con la tecnología
-              </span>
-              <svg
-                className="absolute -bottom-2 left-0 w-full"
-                viewBox="0 0 300 12"
-                fill="none"
-              >
-                <motion.path
-                  d="M2 8 Q 75 2, 150 6 T 298 5"
-                  stroke="var(--gold)"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  fill="none"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 1.2, delay: 0.8 }}
-                />
-              </svg>
-            </span>{" "}
-            que mereces.
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.25 }}
-            className="mt-6 text-lg text-[color:var(--ink-soft)] max-w-xl leading-relaxed"
-          >
-            Ortodoncia invisible, brackets de autoligado y diseño de sonrisa con el{" "}
-            <span className="text-[color:var(--ink)] font-semibold">
-              Dr. Alejandro Valencia
+            La sonrisa que<br />
+            siempre soñaste,<br />
+            <span style={{ color: "var(--turquoise-deep)" }}>
+              más cerca.
             </span>
-            . Más de {clinic.stats.yearsExperience} años transformando sonrisas en Medellín.
-          </motion.p>
+          </h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="mt-8 flex flex-wrap gap-3"
+          <p
+            className="mt-5 leading-relaxed max-w-[360px]"
+            style={{ fontSize: 16, color: "var(--ink-soft)" }}
           >
+            Nuestro objetivo es que disfrutes cada visita sin miedo ni estrés.
+            El{" "}
+            <strong style={{ color: "var(--ink)" }}>
+              {clinic.doctor.shortName}
+            </strong>{" "}
+            lleva más de {clinic.stats.yearsExperience} años transformando
+            sonrisas en Medellín.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="#agendar"
-              className="group inline-flex items-center gap-2 bg-[color:var(--ink)] text-white px-6 py-3.5 rounded-full font-semibold shadow-lg shadow-[color:var(--ink)]/15 hover:bg-[color:var(--turquoise-deep)] transition-all hover:shadow-xl hover:-translate-y-0.5"
+              style={{ background: "var(--turquoise-deep)", color: "#fff" }}
+              className="inline-flex items-center px-7 py-3 rounded-full font-semibold text-[15px] hover:opacity-90 transition-opacity"
             >
-              <Calendar className="w-4 h-4" />
-              Agenda tu valoración
+              Agendar cita
             </a>
             <a
-              href={`https://wa.me/${clinic.contact.whatsappDigits}?text=Hola%20Dr.%20Alejandro,%20quisiera%20agendar%20una%20cita`}
+              href={`https://wa.me/${clinic.contact.whatsappDigits}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 bg-white text-[color:var(--ink)] px-6 py-3.5 rounded-full font-semibold border border-[color:var(--turquoise-soft)] hover:border-[color:var(--turquoise)] transition-all hover:-translate-y-0.5"
+              style={{
+                color: "var(--turquoise-deep)",
+                border: "2px solid var(--turquoise-soft)",
+              }}
+              className="inline-flex items-center px-7 py-3 rounded-full font-semibold text-[15px] hover:border-[color:var(--turquoise)] transition-colors"
             >
-              <MessageCircle className="w-4 h-4 text-[color:var(--turquoise-deep)]" />
-              Escribir por WhatsApp
+              WhatsApp
             </a>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="mt-10 flex items-center gap-6 text-sm"
-          >
-            <div className="flex items-center gap-2">
-              <div className="flex">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-4 h-4 fill-[color:var(--gold)] text-[color:var(--gold)]"
-                  />
-                ))}
-              </div>
-              <span className="font-semibold text-[color:var(--ink)]">
-                {clinic.stats.rating}
-              </span>
-              <span className="text-[color:var(--ink-soft)]">(120+ reseñas)</span>
-            </div>
-            <div className="hidden sm:flex items-center gap-2 text-[color:var(--ink-soft)]">
-              <ShieldCheck className="w-4 h-4 text-[color:var(--turquoise-deep)]" />
-              U. CES · U. Guadalajara
-            </div>
-          </motion.div>
-
+          <div className="mt-8 flex flex-wrap gap-5 text-sm" style={{ color: "var(--ink-soft)" }}>
+            <span>⭐ {clinic.stats.rating} · +120 reseñas</span>
+            <span>✓ U. CES · U. Guadalajara</span>
+          </div>
         </motion.div>
 
-        {/* Doctor image */}
-        <motion.div style={{ y: yImg }} className="relative">
+        {/* ── RIGHT: tooth + doctor ── */}
+        <div className="relative flex items-end justify-center">
+
+          {/* Tooth — behind doctor, shifted left */}
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-            className="relative aspect-[4/5] max-w-md mx-auto lg:ml-auto lg:mr-0"
+            transition={{ duration: 0.85, delay: 0.15, ease: "easeOut" }}
+            className="absolute z-0 pointer-events-none"
+            style={{ width: "55%", bottom: 0, left: "-10%" }}
           >
-            {/* Background shape */}
-            <div className="absolute -inset-6 rounded-[3rem] bg-gradient-to-br from-[color:var(--turquoise)] to-[color:var(--turquoise-deep)] opacity-20 blur-2xl" />
-            <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-br from-[color:var(--turquoise)]/30 via-transparent to-[color:var(--gold)]/20" />
-
-            {/* Image container */}
-            <div className="relative h-full w-full rounded-[2.5rem] overflow-hidden shadow-2xl shadow-[color:var(--ink)]/20">
-              <Image
-                src={clinic.doctor.photo}
-                alt={`${clinic.doctor.prefix} ${clinic.doctor.name} – Ortodoncista en Medellín`}
-                fill
-                priority
-                sizes="(max-width: 1024px) 90vw, 500px"
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--ink)]/60 via-transparent to-transparent" />
-              <div className="absolute bottom-5 left-5 right-5 text-white">
-                <div className="text-xs uppercase tracking-[0.2em] text-[color:var(--turquoise-soft)] mb-1">
-                  Ortodoncista
-                </div>
-                <div className="font-display font-bold text-xl leading-tight">
-                  {clinic.doctor.prefix} {clinic.doctor.name}
-                </div>
-              </div>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, x: -20, y: 10 }}
-              animate={{ opacity: 1, x: 0, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.15 }}
-              className="absolute -right-2 sm:-right-6 bottom-14 bg-white rounded-2xl shadow-xl px-4 py-3 flex items-center gap-3 border border-[color:var(--turquoise-soft)]"
-            >
-              <div className="w-10 h-10 rounded-full bg-[color:var(--gold)]/15 flex items-center justify-center">
-                <Star className="w-5 h-5 text-[color:var(--gold)]" />
-              </div>
-              <div>
-                <div className="text-xs text-[color:var(--ink-soft)]">Calificación</div>
-                <div className="font-display font-bold text-[color:var(--ink)]">
-                  {clinic.stats.rating} / 5.0
-                </div>
-              </div>
-            </motion.div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/tooth.png"
+              alt=""
+              aria-hidden="true"
+              style={{
+                width: "100%",
+                height: "auto",
+                objectFit: "contain",
+                filter: "sepia(1) hue-rotate(145deg) saturate(8) brightness(0.82)",
+              }}
+            />
           </motion.div>
-        </motion.div>
+
+          {/* Doctor — centered, on top of tooth */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.35 }}
+            className="relative z-10"
+            style={{ width: "95%", maxWidth: 480, paddingTop: "40px" }}
+          >
+            <Image
+              src={clinic.doctor.photo}
+              alt={`${clinic.doctor.prefix} ${clinic.doctor.name} – Ortodoncista en Medellín`}
+              width={380}
+              height={500}
+              priority
+              className="w-full h-auto object-contain object-bottom [mix-blend-mode:multiply]"
+            />
+          </motion.div>
+        </div>
       </div>
     </section>
   );
