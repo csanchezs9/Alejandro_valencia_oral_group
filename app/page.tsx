@@ -5,6 +5,7 @@ import BeforeAfter from "@/components/BeforeAfter";
 import Services from "@/components/Services";
 import AboutDoctor from "@/components/AboutDoctor";
 import Process from "@/components/Process";
+import Reviews from "@/components/Reviews";
 import FAQ from "@/components/FAQ";
 import Location from "@/components/Location";
 import Footer from "@/components/Footer";
@@ -16,11 +17,23 @@ export default function Home() {
       <Navbar />
       <main className="flex-1">
         <Hero />
-        <SocialProof />
         <BeforeAfter />
         <Services />
         <AboutDoctor />
-        <Process />
+        {/* Shared background across both sections — image fixed to viewport */}
+        <div
+          className="relative"
+          style={{
+            backgroundImage: "url('/images/cdn/75fc616c3cc11dde423510ccae99875f.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundAttachment: "fixed",
+          }}
+        >
+          <Process />
+          <SocialProof />
+        </div>
+        <Reviews />
         <FAQ />
         <Location />
       </main>

@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { services, type Service } from "@/lib/data/clinic";
 import { useState } from "react";
+import Reveal from "@/components/Reveal";
 
 const iconMap: Record<string, typeof Sparkles> = {
   Sparkles, UserRound, Baby, Smile, Star, Grid3x3, Zap, EyeOff,
@@ -31,13 +32,7 @@ export default function Services() {
   return (
     <section id="servicios" className="relative py-20 md:py-28 bg-[color:var(--off-white)]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
-          className="max-w-2xl mb-12"
-        >
+        <Reveal className="max-w-2xl mb-12">
           <div className="text-xs uppercase tracking-[0.25em] text-[color:var(--turquoise-deep)] font-semibold mb-4">
             Tratamientos
           </div>
@@ -48,7 +43,7 @@ export default function Services() {
             Desde ortodoncia invisible hasta diseño integral, con tecnología de vanguardia
             y un enfoque 100% personalizado.
           </p>
-        </motion.div>
+        </Reveal>
 
         {/* Filter pills */}
         <motion.div

@@ -1,27 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 const cases = [
   {
-    id: 2,
+    id: 1,
     title: "Diseño de sonrisa integral",
     duration: "18 meses",
-    before: "/images/cdn/dd7adb7f281d3c51969c8f5e60cb653f.jpg",
-    after: "/images/cdn/5cff68b6748abacf98a87e5051188d16.jpg",
+    before: "/images/before/segunda%20persona/antes.png",
+    after: "/images/before/segunda%20persona/despues.png",
+  },
+  {
+    id: 2,
+    title: "Ortodoncia de autoligado",
+    duration: "12 meses",
+    before: "/images/before/3%20persona/antes.png",
+    after: "/images/before/3%20persona/despues.png",
   },
   {
     id: 3,
-    title: "Ortodoncia de autoligado",
-    duration: "12 meses",
-    before: "/images/cdn/2bda9a8f7e3d4f466186b2c336957fd5.jpg",
-    after: "/images/cdn/054036d07af8ae2432fc1ef6ff78fa12.jpg",
-  },
-  {
-    id: 4,
     title: "Transformación de sonrisa",
     duration: "",
     before: "/images/before/after/before.jpg",
@@ -37,27 +38,6 @@ function SliderCard({ c, index }: { c: (typeof cases)[number]; index: number }) 
   const clipBefore = useTransform(x, (v) => `inset(0 ${100 - v}% 0 0)`);
   const handleLeft = useTransform(x, (v) => `${v}%`);
 
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            const controls = animate(x, [50, 85, 15, 50], {
-              duration: 3,
-              ease: "easeInOut",
-            });
-            obs.disconnect();
-            return () => controls.stop();
-          }
-        }
-      },
-      { threshold: 0.4 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [x]);
 
   const handleMove = (clientX: number) => {
     const el = containerRef.current;
@@ -77,12 +57,17 @@ function SliderCard({ c, index }: { c: (typeof cases)[number]; index: number }) 
       <div
         ref={containerRef}
         className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl shadow-[color:var(--ink)]/15 select-none cursor-ew-resize touch-none bg-[color:var(--ink)]"
-        onMouseMove={(e) => isDragging.current && handleMove(e.clientX)}
-        onMouseDown={(e) => { isDragging.current = true; handleMove(e.clientX); }}
-        onMouseUp={() => { isDragging.current = false; }}
-        onMouseLeave={() => { isDragging.current = false; }}
-        onTouchMove={(e) => handleMove(e.touches[0].clientX)}
-        onTouchStart={(e) => handleMove(e.touches[0].clientX)}
+        onPointerDown={(e) => {
+          e.currentTarget.setPointerCapture(e.pointerId);
+          isDragging.current = true;
+          handleMove(e.clientX);
+        }}
+        onPointerMove={(e) => {
+          if (!isDragging.current) return;
+          handleMove(e.clientX);
+        }}
+        onPointerUp={() => { isDragging.current = false; }}
+        onPointerCancel={() => { isDragging.current = false; }}
       >
         {/* After image */}
         <motion.div style={{ clipPath: clipAfter }} className="absolute inset-0">
@@ -156,24 +141,20 @@ export default function BeforeAfter() {
   return (
     <section className="relative py-20 md:py-28 bg-[color:var(--off-white)]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-12 md:mb-16"
-        >
-          <div className="text-xs uppercase tracking-[0.25em] text-[color:var(--turquoise-deep)] font-semibold mb-4">
-            Transformaciones reales
-          </div>
-          <h2 className="font-display font-bold text-3xl md:text-5xl text-[color:var(--ink)] leading-tight">
-            Arrastra para ver el{" "}
-            <span className="text-[color:var(--turquoise-deep)]">antes y después</span>
-          </h2>
-          <p className="mt-5 text-[color:var(--ink-soft)]">
-            Casos reales de nuestros pacientes. Los tiempos varían según cada tratamiento.
-          </p>
-        </motion.div>
+        <div className="text-center max-w-2xl mx-auto mb-12 md:mb-16">
+          <Reveal>
+            <div className="text-xs uppercase tracking-[0.25em] text-[color:var(--turquoise-deep)] font-semibold mb-4">
+              Transformaciones reales
+            </div>
+            <h2 className="font-display font-bold text-3xl md:text-5xl text-[color:var(--ink)] leading-tight">
+              Arrastra para ver el{" "}
+              <span className="text-[color:var(--turquoise-deep)]">antes y después</span>
+            </h2>
+            <p className="mt-5 text-[color:var(--ink-soft)]">
+              Casos reales de nuestros pacientes. Los tiempos varían según cada tratamiento.
+            </p>
+          </Reveal>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {cases.map((c, i) => (

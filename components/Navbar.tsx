@@ -14,12 +14,16 @@ const links = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
+    let last = window.scrollY;
+    const onScroll = () => {
+      const curr = window.scrollY;
+      setHidden(curr > last && curr > 80);
+      last = curr;
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -29,21 +33,11 @@ export default function Navbar() {
       initial={{ y: -32, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-white/85 backdrop-blur-md border-b border-[color:var(--turquoise-soft)] shadow-[0_8px_30px_rgba(11,43,58,0.06)]"
-          : "bg-transparent"
-      }`}
+      className={`fixed top-0 inset-x-0 z-50 bg-white/85 backdrop-blur-md border-b border-[color:var(--turquoise-soft)] shadow-[0_8px_30px_rgba(11,43,58,0.06)] transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 md:h-20 flex items-center justify-between">
-        <a href="#top" className="flex items-center gap-2.5 group">
-          <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[color:var(--turquoise)] to-[color:var(--turquoise-deep)] flex items-center justify-center shadow-sm">
-            <span className="text-white font-display font-bold text-lg leading-none">O</span>
-            <span className="absolute -right-0.5 -bottom-0.5 w-2 h-2 rounded-full bg-[color:var(--gold)]" />
-          </div>
-          <div className="leading-tight">
-            <div className="font-display font-bold text-[color:var(--ink)] text-base">Odont. Alejandro Valencia Toro</div>
-          </div>
+        <a href="#top" className="group">
+          <div className="font-display font-bold text-[color:var(--ink)] text-base">Odont. Alejandro Valencia Toro</div>
         </a>
 
         <nav className="hidden md:flex items-center gap-7">

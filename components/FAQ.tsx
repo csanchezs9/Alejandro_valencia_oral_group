@@ -4,27 +4,22 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 import { faqs } from "@/lib/data/clinic";
+import Reveal from "@/components/Reveal";
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative py-20 md:py-28 bg-[color:var(--off-white)]">
+    <section id="faq" className="relative pt-10 md:pt-14 pb-20 md:pb-28 bg-[color:var(--off-white)]">
       <div className="max-w-4xl mx-auto px-5 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
+        <Reveal className="text-center mb-12">
           <div className="text-xs uppercase tracking-[0.25em] text-[color:var(--turquoise-deep)] font-semibold mb-4">
             Preguntas frecuentes
           </div>
           <h2 className="font-display font-bold text-3xl md:text-5xl text-[color:var(--ink)] leading-tight">
             Lo que quieres saber
           </h2>
-        </motion.div>
+        </Reveal>
 
         <div className="space-y-3">
           {faqs.map((f, i) => (

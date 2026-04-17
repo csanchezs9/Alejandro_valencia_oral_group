@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { Calendar, MessageCircle, Sparkles, ShieldCheck, Star } from "lucide-react";
+import { Calendar, MessageCircle, ShieldCheck, Star } from "lucide-react";
 import { clinic } from "@/lib/data/clinic";
 
 export default function Hero() {
@@ -26,16 +26,6 @@ export default function Hero() {
 
       <div className="relative max-w-7xl mx-auto px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
         <motion.div style={{ y: yText }} className="relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-white/70 backdrop-blur px-4 py-1.5 rounded-full border border-[color:var(--turquoise-soft)] text-xs font-semibold text-[color:var(--turquoise-deep)] mb-6"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            Especialista certificado · Medellín, El Poblado
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -129,6 +119,7 @@ export default function Hero() {
               U. CES · U. Guadalajara
             </div>
           </motion.div>
+
         </motion.div>
 
         {/* Doctor image */}
@@ -163,24 +154,6 @@ export default function Hero() {
                 </div>
               </div>
             </div>
-
-            {/* Floating badge */}
-            <motion.div
-              initial={{ opacity: 0, x: 20, y: -10 }}
-              animate={{ opacity: 1, x: 0, y: 0 }}
-              transition={{ duration: 0.6, delay: 1 }}
-              className="absolute -left-4 sm:-left-8 top-8 bg-white rounded-2xl shadow-xl px-4 py-3 flex items-center gap-3 border border-[color:var(--turquoise-soft)]"
-            >
-              <div className="w-10 h-10 rounded-full bg-[color:var(--turquoise-soft)] flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-[color:var(--turquoise-deep)]" />
-              </div>
-              <div>
-                <div className="text-xs text-[color:var(--ink-soft)]">Pacientes felices</div>
-                <div className="font-display font-bold text-[color:var(--ink)]">
-                  +{clinic.stats.patients.toLocaleString("es-CO")}
-                </div>
-              </div>
-            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, x: -20, y: 10 }}
