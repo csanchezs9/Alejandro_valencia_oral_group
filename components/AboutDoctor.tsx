@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { GraduationCap, Award, Sparkles } from "lucide-react";
 import { clinic } from "@/lib/data/clinic";
@@ -24,12 +23,13 @@ export default function AboutDoctor() {
             <div className="absolute -top-4 -left-4 w-full h-full rounded-[2.5rem] border-2 border-[color:var(--gold)]/40" />
             <div className="absolute -bottom-4 -right-4 w-full h-full rounded-[2.5rem] bg-[color:var(--turquoise)]/15" />
             <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden shadow-2xl shadow-[color:var(--ink)]/20">
-              <Image
-                src={clinic.doctor.photo2}
-                alt={`${clinic.doctor.prefix} ${clinic.doctor.name}`}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 90vw, 450px"
+              <video
+                src="/videos/AQNz-miNSvOCscclxfZe-RSoSd5DFEkuAD025TWU9RJBIzxy9l8bgAM-sMyF0rf82rnsjgVstHr_Eddk5Kob-BDP4tBBVmtyeYfKO1Y.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
           </div>

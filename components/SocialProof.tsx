@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { Award, Users, Smile, Clock } from "lucide-react";
@@ -50,28 +51,19 @@ const stats = [
 
 export default function SocialProof() {
   return (
-    <section className="relative py-16 md:py-24 bg-[color:var(--ink)] overflow-hidden">
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-[color:var(--turquoise)] blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-[color:var(--gold)] blur-3xl" />
+    <section className="relative py-16 md:py-24 overflow-hidden">
+      <div className="absolute inset-0">
+        <Image
+          src="/images/cdn/75fc616c3cc11dde423510ccae99875f.jpg"
+          alt=""
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-[color:var(--ink)]/75" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-2xl mx-auto mb-12"
-        >
-          <div className="text-xs uppercase tracking-[0.25em] text-[color:var(--turquoise)] font-semibold mb-4">
-            Resultados que hablan
-          </div>
-          <h2 className="font-display font-bold text-3xl md:text-5xl text-white leading-tight">
-            Experiencia, precisión y confianza
-          </h2>
-        </motion.div>
-
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {stats.map((s, i) => (
             <motion.div

@@ -42,8 +42,7 @@ export default function Navbar() {
             <span className="absolute -right-0.5 -bottom-0.5 w-2 h-2 rounded-full bg-[color:var(--gold)]" />
           </div>
           <div className="leading-tight">
-            <div className="font-display font-bold text-[color:var(--ink)] text-base">{clinic.brand}</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--ink-soft)]">Ortodoncia</div>
+            <div className="font-display font-bold text-[color:var(--ink)] text-base">Odont. Alejandro Valencia Toro</div>
           </div>
         </a>
 
