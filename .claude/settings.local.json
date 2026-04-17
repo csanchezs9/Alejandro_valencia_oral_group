@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/c/Users/camil/OneDrive/Documents/Oral_Group/scrape/**)",
+      "Bash(python -c ' *)",
+      "Bash(python)",
+      "Bash(grep -oE '\\(short_description|long_description|bio|name|title|address|phone|email|city|treatment|specialty|slug|topdoctors|medellin\\)\":\\\\s*\"[^\"]{3,200}\"' nuxt.js)",
+      "Bash(cp ../scrape/images/cdn/* public/images/cdn/)",
+      "Bash(cp ../scrape/images/favicon.ico public/favicon.ico)",
+      "Read(//c/c/Users/camil/OneDrive/Documents/Oral_Group/web/public/images/**)",
+      "Read(//c/c/Users/camil/OneDrive/Documents/Oral_Group/web/**)",
+      "Read(//c/c/Users/camil/OneDrive/Documents/Oral_Group/web/app/**)",
+      "Bash(cat next.config.ts)",
+      "Bash(cat next.config.js)",
+      "Bash(npm run *)"
+    ]
+  }
+}
