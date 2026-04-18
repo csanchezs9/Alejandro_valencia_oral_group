@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Calendar, MapPin, Phone } from "lucide-react";
+import { Menu, X, Calendar } from "lucide-react";
 import { clinic } from "@/lib/data/clinic";
 
 const links = [
@@ -14,132 +14,160 @@ const links = [
 ];
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
-
-  useEffect(() => {
-    let last = window.scrollY;
-    const onScroll = () => {
-      const curr = window.scrollY;
-      setHidden(curr > last && curr > 80);
-      last = curr;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <motion.header
-      initial={{ y: -32, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 inset-x-0 z-50 transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}
-    >
-      {/* ── Top info bar ── */}
-      <div className="relative bg-white border-b border-gray-200 text-xs text-gray-900 py-2.5 px-5 sm:px-8">
-
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          {/* Left: address */}
-          <span className="hidden sm:flex items-center gap-1.5 truncate">
-            <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-gray-900" />
-            {clinic.clinic.city}, Colombia &nbsp;{clinic.clinic.street}, {clinic.clinic.name}, {clinic.clinic.suite}
-          </span>
-          <span className="sm:hidden flex items-center gap-1.5">
-            <MapPin className="w-3.5 h-3.5 text-gray-900 flex-shrink-0" />
-            {clinic.clinic.city}, Colombia
-          </span>
-
-          {/* Right: phone + instagram */}
-          <div className="flex items-center gap-4 flex-shrink-0">
-            <a
-              href={`tel:${clinic.contact.phoneTel}`}
-              className="flex items-center gap-1.5 hover:text-gray-800 transition-colors"
-            >
-              <Phone className="w-3.5 h-3.5 text-gray-900" />
-              Citas: {clinic.contact.phone}
-            </a>
-            <a
-              href={clinic.contact.instagram}
-              target="_blank"
-              rel="noreferrer"
-              className="hover:opacity-75 transition-opacity"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/iconig.png" alt="Instagram" className="w-4 h-4 object-contain" />
-            </a>
+    <div className="fixed top-0 inset-x-0 z-50 flex justify-center py-4 px-4 pointer-events-none">
+      <motion.div
+        initial={{ y: -32, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="flex items-center justify-between px-5 py-3 bg-white rounded-full shadow-lg w-full max-w-3xl relative pointer-events-auto"
+        style={{ boxShadow: "0 4px 24px rgba(11,43,58,0.10), 0 1px 4px rgba(11,43,58,0.06)" }}
+      >
+        {/* Logo */}
+        <a href="#top" className="flex items-center gap-2.5 shrink-0">
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            whileHover={{ rotate: 8 }}
+            transition={{ duration: 0.3 }}
+            className="w-8 h-8 rounded-xl bg-gradient-to-br from-[color:var(--turquoise)] to-[color:var(--turquoise-deep)] flex items-center justify-center shadow-sm relative"
+          >
+            <span className="text-white font-display font-black text-sm leading-none">OG</span>
+            <span className="absolute -right-0.5 -bottom-0.5 w-2 h-2 rounded-full bg-[color:var(--gold)] border-[1.5px] border-white" />
+          </motion.div>
+          <div className="hidden sm:block">
+            <div className="font-display font-bold text-[color:var(--ink)] text-sm leading-tight">Dr. Alejandro Valencia</div>
+            <div className="text-[10px] text-[color:var(--ink-soft)] leading-tight">Ortodoncista · Medellín</div>
           </div>
-        </div>
-      </div>
-
-      {/* ── Main nav ── */}
-      <div className="bg-white/85 backdrop-blur-md border-b border-[color:var(--turquoise-soft)] shadow-[0_8px_30px_rgba(11,43,58,0.06)]">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 md:h-20 flex items-center justify-between">
-        <a href="#top" className="group">
-          <div className="font-display font-bold text-[color:var(--ink)] text-base">Odont. Alejandro Valencia Toro</div>
         </a>
 
-        <nav className="hidden md:flex items-center gap-7">
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-6">
           {links.map((l) => (
-            <a
+            <motion.div
               key={l.href}
-              href={l.href}
-              className="text-sm font-medium text-[color:var(--ink-soft)] hover:text-[color:var(--turquoise-deep)] transition-colors"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              whileHover={{ scale: 1.05 }}
             >
-              {l.label}
-            </a>
+              <a
+                href={l.href}
+                className="text-sm text-[color:var(--ink-soft)] hover:text-[color:var(--turquoise-deep)] transition-colors font-medium"
+              >
+                {l.label}
+              </a>
+            </motion.div>
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        {/* Desktop CTA */}
+        <motion.div
+          className="hidden md:block"
+          initial={{ opacity: 0, x: 16 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+          whileHover={{ scale: 1.05 }}
+        >
           <a
             href="#agendar"
-            className="hidden md:inline-flex items-center gap-2 bg-[color:var(--ink)] text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-[color:var(--turquoise-deep)] transition-colors shadow-sm"
+            className="inline-flex items-center gap-1.5 px-5 py-2 text-sm text-white rounded-full font-semibold transition-opacity hover:opacity-90"
+            style={{ background: "linear-gradient(135deg, var(--turquoise-deep) 0%, var(--turquoise) 100%)" }}
           >
-            <Calendar className="w-4 h-4" />
+            <Calendar className="w-3.5 h-3.5" />
             Agendar cita
           </a>
-          <button
-            onClick={() => setOpen((v) => !v)}
-            aria-label="Menú"
-            className="md:hidden p-2 rounded-lg text-[color:var(--ink)]"
-          >
-            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
-      </div>
+        </motion.div>
 
+        {/* Mobile hamburger */}
+        <motion.button
+          className="md:hidden flex items-center p-1"
+          onClick={() => setIsOpen(!isOpen)}
+          whileTap={{ scale: 0.9 }}
+          aria-label="Menú"
+        >
+          <Menu className="h-5 w-5 text-[color:var(--ink)]" />
+        </motion.button>
+      </motion.div>
+
+      {/* Mobile overlay */}
       <AnimatePresence>
-        {open && (
+        {isOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden overflow-hidden bg-white border-t border-[color:var(--turquoise-soft)]"
+            className="fixed inset-0 bg-white z-50 pt-24 px-6 md:hidden pointer-events-auto"
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
           >
-            <div className="px-5 py-5 flex flex-col gap-1">
-              {links.map((l) => (
-                <a
+            <motion.button
+              className="absolute top-6 right-6 p-2"
+              onClick={() => setIsOpen(false)}
+              whileTap={{ scale: 0.9 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              aria-label="Cerrar menú"
+            >
+              <X className="h-6 w-6 text-[color:var(--ink)]" />
+            </motion.button>
+
+            <div className="flex flex-col space-y-6">
+              {links.map((l, i) => (
+                <motion.div
                   key={l.href}
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className="py-3 text-[color:var(--ink)] font-medium border-b border-[color:var(--turquoise-soft)] last:border-0"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.08 + 0.1 }}
+                  exit={{ opacity: 0, x: 20 }}
                 >
-                  {l.label}
-                </a>
+                  <a
+                    href={l.href}
+                    className="text-xl font-display font-semibold text-[color:var(--ink)]"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {l.label}
+                  </a>
+                </motion.div>
               ))}
-              <a
-                href="#agendar"
-                onClick={() => setOpen(false)}
-                className="mt-3 inline-flex items-center justify-center gap-2 bg-[color:var(--ink)] text-white px-5 py-3 rounded-full text-sm font-semibold"
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                exit={{ opacity: 0, y: 20 }}
+                className="pt-4"
               >
-                <Calendar className="w-4 h-4" /> Agendar cita
-              </a>
+                <a
+                  href="#agendar"
+                  className="inline-flex items-center justify-center gap-2 w-full px-5 py-3.5 text-base font-semibold text-white rounded-full"
+                  style={{ background: "linear-gradient(135deg, var(--turquoise-deep) 0%, var(--turquoise) 100%)" }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  <Calendar className="w-4 h-4" />
+                  Agendar cita
+                </a>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="pt-2 border-t border-[color:var(--turquoise-soft)]"
+              >
+                <a
+                  href={`tel:${clinic.contact.phoneTel}`}
+                  className="text-sm text-[color:var(--ink-soft)]"
+                >
+                  📞 {clinic.contact.phone}
+                </a>
+              </motion.div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </div>
   );
 }
