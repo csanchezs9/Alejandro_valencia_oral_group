@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Calendar } from "lucide-react";
 import { clinic } from "@/lib/data/clinic";
@@ -15,9 +15,21 @@ const links = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  React.useEffect(() => {
+    let last = window.scrollY;
+    const onScroll = () => {
+      const curr = window.scrollY;
+      setHidden(curr > last && curr > 80);
+      last = curr;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <div className="fixed top-0 inset-x-0 z-50 flex justify-center py-4 px-4 pointer-events-none">
+    <div className={`fixed top-0 inset-x-0 z-50 flex justify-center py-4 px-4 pointer-events-none transition-transform duration-300 ${hidden ? "-translate-y-full" : "translate-y-0"}`}>
       <motion.div
         initial={{ y: -32, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
