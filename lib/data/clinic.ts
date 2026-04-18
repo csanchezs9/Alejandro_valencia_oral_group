@@ -5,7 +5,7 @@ export const clinic = {
     name: "Alejandro Valencia Toro",
     shortName: "Dr. Alejandro Valencia",
     specialty: "Ortodoncista",
-    photo: "/images/doctor/doctor.jpg",
+    photo: "/images/doctor/doctor.PNG",
     photo2: "/images/doctor/doctor-2.jpg",
     education: [
       { degree: "Odontología", institution: "Universidad CES" },

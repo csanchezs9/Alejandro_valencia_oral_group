@@ -17,7 +17,6 @@ const iconMap: Record<string, typeof Sparkles> = {
 };
 
 const categories = [
-  { key: "all", label: "Todos" },
   { key: "ortodoncia", label: "Ortodoncia" },
   { key: "estetica", label: "Estética" },
   { key: "infantil", label: "Infantil" },
@@ -25,9 +24,8 @@ const categories = [
 ] as const;
 
 export default function Services() {
-  const [filter, setFilter] = useState<(typeof categories)[number]["key"]>("all");
-  const filtered =
-    filter === "all" ? services : services.filter((s) => s.category === filter);
+  const [filter, setFilter] = useState<(typeof categories)[number]["key"]>("ortodoncia");
+  const filtered = services.filter((s) => s.category === filter);
 
   return (
     <section id="servicios" className="relative py-20 md:py-28 bg-[color:var(--off-white)]">
