@@ -22,7 +22,7 @@ export default function Navbar() {
         initial={{ y: -32, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="flex items-center justify-between px-5 py-3 bg-white rounded-full shadow-lg w-full max-w-3xl relative pointer-events-auto"
+        className="flex items-center justify-between px-8 py-4 bg-white rounded-full shadow-lg w-full max-w-5xl relative pointer-events-auto"
         style={{ boxShadow: "0 4px 24px rgba(11,43,58,0.10), 0 1px 4px rgba(11,43,58,0.06)" }}
       >
         {/* Logo */}
@@ -44,7 +44,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-9">
           {links.map((l) => (
             <motion.div
               key={l.href}
@@ -73,7 +73,7 @@ export default function Navbar() {
         >
           <a
             href="#agendar"
-            className="inline-flex items-center gap-1.5 px-5 py-2 text-sm text-white rounded-full font-semibold transition-opacity hover:opacity-90"
+            className="inline-flex items-center gap-1.5 px-6 py-2.5 text-sm text-white rounded-full font-semibold transition-opacity hover:opacity-90"
             style={{ background: "linear-gradient(135deg, var(--turquoise-deep) 0%, var(--turquoise) 100%)" }}
           >
             <Calendar className="w-3.5 h-3.5" />
