@@ -77,32 +77,8 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* ── RIGHT: tooth + doctor ── */}
+        {/* ── RIGHT: doctor ── */}
         <div className="relative flex items-end justify-center">
-
-          {/* Tooth — behind doctor, shifted left */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.85, delay: 0.15, ease: "easeOut" }}
-            className="absolute z-0 pointer-events-none"
-            style={{ width: "55%", bottom: 0, left: "-10%" }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/tooth.png"
-              alt=""
-              aria-hidden="true"
-              style={{
-                width: "100%",
-                height: "auto",
-                objectFit: "contain",
-                filter: "sepia(1) hue-rotate(145deg) saturate(8) brightness(0.82)",
-              }}
-            />
-          </motion.div>
-
-          {/* Doctor — centered, on top of tooth */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -113,8 +89,8 @@ export default function Hero() {
             <Image
               src={clinic.doctor.photo}
               alt={`${clinic.doctor.prefix} ${clinic.doctor.name} – Ortodoncista en Medellín`}
-              width={380}
-              height={500}
+              width={480}
+              height={560}
               priority
               className="w-full h-auto object-contain object-bottom [mix-blend-mode:multiply]"
             />

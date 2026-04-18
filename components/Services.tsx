@@ -9,6 +9,7 @@ import {
 import { services, type Service } from "@/lib/data/clinic";
 import { useState } from "react";
 import Reveal from "@/components/Reveal";
+import Image from "next/image";
 
 const iconMap: Record<string, typeof Sparkles> = {
   Sparkles, UserRound, Baby, Smile, Star, Grid3x3, Zap, EyeOff,
@@ -68,7 +69,7 @@ export default function Services() {
 
         <motion.div
           layout
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {filtered.map((s, i) => (
             <ServiceCard key={s.slug} service={s} delay={Math.min(i * 0.05, 0.4)} />
@@ -85,28 +86,39 @@ function ServiceCard({ service, delay }: { service: Service; delay: number }) {
   return (
     <motion.a
       layout
-      href={`#contacto`}
+      href="#contacto"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay }}
-      className="group relative bg-white rounded-3xl p-7 border border-[color:var(--silver)]/15 hover:border-[color:var(--turquoise)]/40 shadow-sm hover:shadow-xl hover:shadow-[color:var(--turquoise)]/10 transition-all overflow-hidden"
+      className="group relative bg-white rounded-3xl border border-[color:var(--silver)]/15 hover:border-[color:var(--turquoise)]/40 shadow-sm hover:shadow-xl hover:shadow-[color:var(--turquoise)]/10 transition-all overflow-hidden flex flex-col"
     >
-      {/* Subtle bg hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[color:var(--turquoise-soft)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-      <div className="relative">
-        <div className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-[color:var(--turquoise-soft)] to-white border border-[color:var(--turquoise)]/20 flex items-center justify-center mb-5 group-hover:scale-105 group-hover:rotate-3 transition-transform">
-          <Icon className="w-5 h-5 text-[color:var(--turquoise-deep)]" />
+      {/* Image banner */}
+      {service.image && (
+        <div className="relative h-52 overflow-hidden">
+          <Image
+            src={service.image}
+            alt={service.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
         </div>
+      )}
 
-        <div className="text-[10px] uppercase tracking-[0.2em] text-[color:var(--gold)] font-bold mb-2">
+      {/* Subtle bg hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[color:var(--turquoise-soft)] to-transparent opacity-0 group-hover:opacity-60 transition-opacity pointer-events-none" />
+
+      {/* Content */}
+      <div className="relative flex flex-col flex-1 p-6 pt-5">
+        <div className="text-[10px] uppercase tracking-[0.2em] text-[color:var(--gold)] font-bold mb-1.5">
           {service.tagline}
         </div>
-        <h3 className="font-display font-bold text-xl text-[color:var(--ink)] mb-3">
+        <h3 className="font-display font-bold text-xl text-[color:var(--ink)] mb-3 leading-snug">
           {service.title}
         </h3>
-        <p className="text-sm text-[color:var(--ink-soft)] leading-relaxed line-clamp-3">
+        <p className="text-sm text-[color:var(--ink-soft)] leading-relaxed line-clamp-3 flex-1">
           {service.description}
         </p>
 

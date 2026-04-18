@@ -74,6 +74,7 @@ export type Service = {
   tagline: string;
   description: string;
   icon: string; // lucide name
+  image?: string;
   category: "ortodoncia" | "estetica" | "infantil" | "general";
   featured?: boolean;
 };
@@ -86,6 +87,7 @@ export const services: Service[] = [
     description:
       "Alineadores transparentes y removibles que corrigen la posición de los dientes sin afectar tu estética diaria. La alternativa moderna a los brackets.",
     icon: "Sparkles",
+    image: "/images/tratamientos/ortodoncia-invisible.jpg",
     category: "ortodoncia",
     featured: true,
   },
@@ -96,6 +98,7 @@ export const services: Service[] = [
     description:
       "Tratamientos personalizados para adultos que buscan mejorar función y estética, con opciones discretas y tecnología de última generación.",
     icon: "UserRound",
+    image: "/images/tratamientos/adultos.jpg",
     category: "ortodoncia",
     featured: true,
   },
@@ -106,6 +109,7 @@ export const services: Service[] = [
     description:
       "Intervención temprana para guiar el desarrollo dental de los más pequeños. Aparatos fijos o removibles en un ambiente amigable.",
     icon: "Baby",
+    image: "/images/tratamientos/infantil.jpg",
     category: "infantil",
     featured: true,
   },
@@ -116,6 +120,7 @@ export const services: Service[] = [
     description:
       "Planificación digital de tu sonrisa ideal aplicando principios de proporción, armonía y estética facial. Ves el resultado antes de empezar.",
     icon: "Smile",
+    image: "/images/tratamientos/diseno-sonrisa.jpg",
     category: "estetica",
     featured: true,
   },
@@ -126,6 +131,7 @@ export const services: Service[] = [
     description:
       "Procedimiento seguro y profesional que devuelve la luminosidad natural a tus dientes sin dañar el esmalte.",
     icon: "Star",
+    image: "/images/tratamientos/blanqueamiento.jpg",
     category: "estetica",
     featured: true,
   },
@@ -136,6 +142,7 @@ export const services: Service[] = [
     description:
       "Sistema probado que corrige desde pequeñas irregularidades hasta maloclusiones complejas, con opciones estéticas en cerámica.",
     icon: "Grid3x3",
+    image: "/images/tratamientos/brackets.jpg",
     category: "ortodoncia",
   },
   {
@@ -145,6 +152,7 @@ export const services: Service[] = [
     description:
       "Brackets con clip integrado que reducen la fricción, disminuyen el dolor y acortan los tiempos de tratamiento.",
     icon: "Zap",
+    image: "/images/tratamientos/brackets.jpg",
     category: "ortodoncia",
   },
   {
@@ -154,6 +162,7 @@ export const services: Service[] = [
     description:
       "Brackets colocados en la cara interna de los dientes: imperceptibles para quienes te ven, igual de efectivos.",
     icon: "EyeOff",
+    image: "/images/tratamientos/ortodoncia-invisible.jpg",
     category: "ortodoncia",
   },
   {
@@ -163,6 +172,7 @@ export const services: Service[] = [
     description:
       "Tecnología de última generación que permite visualizar el resultado final y planificar cada movimiento con precisión milimétrica.",
     icon: "Cpu",
+    image: "/images/tratamientos/general.jpg",
     category: "ortodoncia",
   },
   {
@@ -172,6 +182,7 @@ export const services: Service[] = [
     description:
       "Uso del láser en procedimientos complementarios a la ortodoncia para acelerar la recuperación y minimizar las molestias.",
     icon: "Flashlight",
+    image: "/images/tratamientos/general.jpg",
     category: "ortodoncia",
   },
   {
@@ -181,6 +192,7 @@ export const services: Service[] = [
     description:
       "Fase ortodóncica previa y posterior a la cirugía ortognática, coordinada con el cirujano maxilofacial.",
     icon: "Stethoscope",
+    image: "/images/tratamientos/adultos.jpg",
     category: "ortodoncia",
   },
   {
@@ -190,6 +202,7 @@ export const services: Service[] = [
     description:
       "Corrección de mordidas y alineación que no solo mejora la apariencia sino la función masticatoria y la salud bucal a largo plazo.",
     icon: "Wrench",
+    image: "/images/tratamientos/adultos.jpg",
     category: "ortodoncia",
   },
   {
@@ -199,6 +212,7 @@ export const services: Service[] = [
     description:
       "Opciones con brackets cerámicos, zafiro o alineadores para quienes buscan resultados sin comprometer su imagen.",
     icon: "Gem",
+    image: "/images/tratamientos/estetica.jpg",
     category: "estetica",
   },
   {
@@ -208,6 +222,7 @@ export const services: Service[] = [
     description:
       "Carillas, coronas, composites y procedimientos que buscan simetría y equilibrio entre dientes, labios y rostro.",
     icon: "Heart",
+    image: "/images/tratamientos/estetica.jpg",
     category: "estetica",
   },
   {
@@ -217,6 +232,7 @@ export const services: Service[] = [
     description:
       "Prevención, diagnóstico y tratamiento odontopediátrico en un ambiente diseñado para que los niños se sientan tranquilos.",
     icon: "Candy",
+    image: "/images/tratamientos/infantil.jpg",
     category: "infantil",
   },
   {
@@ -226,6 +242,7 @@ export const services: Service[] = [
     description:
       "Limpiezas, resinas, endodoncia y todos los cuidados que mantienen tu boca sana y funcional.",
     icon: "ShieldCheck",
+    image: "/images/tratamientos/general.jpg",
     category: "general",
   },
   {
@@ -235,6 +252,7 @@ export const services: Service[] = [
     description:
       "Plan integral personalizado según tus necesidades: periodoncia, rehabilitación oral, prótesis y más.",
     icon: "ClipboardList",
+    image: "/images/tratamientos/general.jpg",
     category: "general",
   },
   {
@@ -244,6 +262,7 @@ export const services: Service[] = [
     description:
       "Rama de la odontología que corrige la posición de dientes y huesos para restablecer equilibrio morfológico, funcional y estético.",
     icon: "Atom",
+    image: "/images/tratamientos/brackets.jpg",
     category: "ortodoncia",
   },
 ];
