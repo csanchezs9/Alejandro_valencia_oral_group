@@ -10,9 +10,9 @@ import {
 import { IPhoneMockup } from "@/components/ui/iphone-mockup";
 
 /* ─────────────────────────────────────────
-   PHONE SCALE  0.52 → visual ≈ 217 × 456 px
+   PHONE SCALE  0.62 → visual ≈ 259 × 543 px
 ───────────────────────────────────────── */
-const PHONE_SCALE = 0.52;
+const PHONE_SCALE = 0.62;
 const OUTER_W = 417;
 const OUTER_H = 876;
 const LABEL_W = Math.round(OUTER_W * PHONE_SCALE);
@@ -231,14 +231,14 @@ export default function Process() {
       );
 
       tl.fromTo(leftRef.current,
-        { x: "0%", rotateY: -22, scale: 0.76, opacity: 0.85 },
-        { x: "-142%", rotateY: 0, scale: 1, opacity: 1, duration: 4 },
+        { x: "0%", rotateY: -14, scale: 0.80, opacity: 0.85 },
+        { x: "-72%", rotateY: 0, scale: 1, opacity: 1, duration: 4 },
         0,
       );
 
       tl.fromTo(rightRef.current,
-        { x: "0%", rotateY: 22, scale: 0.76, opacity: 0.85 },
-        { x: "142%", rotateY: 0, scale: 1, opacity: 1, duration: 4 },
+        { x: "0%", rotateY: 14, scale: 0.80, opacity: 0.85 },
+        { x: "72%", rotateY: 0, scale: 1, opacity: 1, duration: 4 },
         0,
       );
 
@@ -291,20 +291,20 @@ export default function Process() {
           className="relative z-10 flex items-start justify-center"
         >
           {/* Left */}
-          <div ref={leftRef} className="relative z-10">
+          <div ref={leftRef} className="relative z-10" style={{ willChange: "transform", backfaceVisibility: "hidden" }}>
             <Phone><Screen1 /></Phone>
             <div
               ref={label1Ref}
               className="mt-5 text-center opacity-0"
               style={{ width: LABEL_W }}
             >
-              <p className="text-white font-display font-black text-lg leading-snug">{steps[0].title}</p>
-              <p className="text-white/60 text-sm mt-2 leading-snug px-1">{steps[0].desc}</p>
+              <p className="text-white font-display font-black text-xl leading-snug">{steps[0].title}</p>
+              <p className="text-white/65 text-[15px] mt-2 leading-snug px-1">{steps[0].desc}</p>
             </div>
           </div>
 
           {/* Center */}
-          <div ref={centerRef} className="relative z-20">
+          <div ref={centerRef} className="relative z-20" style={{ willChange: "transform", backfaceVisibility: "hidden" }}>
             <Phone shadow="0 32px 90px rgba(0,0,0,0.70), 0 8px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.05)">
               <Screen2 />
             </Phone>
@@ -313,21 +313,21 @@ export default function Process() {
               className="mt-5 text-center opacity-0"
               style={{ width: LABEL_W }}
             >
-              <p className="text-white font-display font-black text-lg leading-snug">{steps[1].title}</p>
-              <p className="text-white/60 text-sm mt-2 leading-snug px-1">{steps[1].desc}</p>
+              <p className="text-white font-display font-black text-xl leading-snug">{steps[1].title}</p>
+              <p className="text-white/65 text-[15px] mt-2 leading-snug px-1">{steps[1].desc}</p>
             </div>
           </div>
 
           {/* Right */}
-          <div ref={rightRef} className="relative z-10">
+          <div ref={rightRef} className="relative z-10" style={{ willChange: "transform", backfaceVisibility: "hidden" }}>
             <Phone><Screen3 /></Phone>
             <div
               ref={label3Ref}
               className="mt-5 text-center opacity-0"
               style={{ width: LABEL_W }}
             >
-              <p className="text-white font-display font-black text-lg leading-snug">{steps[2].title}</p>
-              <p className="text-white/60 text-sm mt-2 leading-snug px-1">{steps[2].desc}</p>
+              <p className="text-white font-display font-black text-xl leading-snug">{steps[2].title}</p>
+              <p className="text-white/65 text-[15px] mt-2 leading-snug px-1">{steps[2].desc}</p>
             </div>
           </div>
         </div>
