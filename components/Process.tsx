@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   CalendarCheck, Smile, Clock, ChevronRight,
   Star, CheckCircle2, ShieldCheck, Sparkles, BadgeCheck,
+  CalendarCheck2, ClipboardList, Award,
 } from "lucide-react";
 import { IPhoneMockup } from "@/components/ui/iphone-mockup";
 
@@ -181,30 +182,45 @@ function Phone({ children, shadow }: { children: React.ReactNode; shadow?: strin
 }
 
 const steps = [
-  { title: "Valoración sin costo", desc: "Diagnóstico completo, radiografías y simulación de tu sonrisa ideal — todo gratis." },
-  { title: "Plan hecho para ti",   desc: "Tecnología 3D, alineadores a medida y resultados visibles desde el primer mes."     },
-  { title: "Sonrisa que enamora",  desc: "Transformación real, permanente y respaldada por más de 2.500 pacientes felices."   },
+  {
+    Icon: CalendarCheck2,
+    title: "Valoración sin costo",
+    desc: "Diagnóstico completo, radiografías y simulación de tu sonrisa ideal — todo gratis.",
+  },
+  {
+    Icon: ClipboardList,
+    title: "Plan hecho para ti",
+    desc: "Tecnología 3D, alineadores a medida y resultados visibles desde el primer mes.",
+  },
+  {
+    Icon: Award,
+    title: "Sonrisa que enamora",
+    desc: "Transformación real, permanente y respaldada por más de 2.500 pacientes felices.",
+  },
 ];
 
 export default function Process() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const headRef    = useRef<HTMLDivElement>(null);
-  const groupRef   = useRef<HTMLDivElement>(null);
-  const leftRef    = useRef<HTMLDivElement>(null);
-  const centerRef  = useRef<HTMLDivElement>(null);
-  const rightRef   = useRef<HTMLDivElement>(null);
-  const label1Ref  = useRef<HTMLDivElement>(null);
-  const label2Ref  = useRef<HTMLDivElement>(null);
-  const label3Ref  = useRef<HTMLDivElement>(null);
-  const hintRef    = useRef<HTMLDivElement>(null);
+  const sectionRef  = useRef<HTMLElement>(null);
+  const desktopRef  = useRef<HTMLDivElement>(null);
+  const headRef     = useRef<HTMLDivElement>(null);
+  const groupRef    = useRef<HTMLDivElement>(null);
+  const leftRef     = useRef<HTMLDivElement>(null);
+  const centerRef   = useRef<HTMLDivElement>(null);
+  const rightRef    = useRef<HTMLDivElement>(null);
+  const label1Ref   = useRef<HTMLDivElement>(null);
+  const label2Ref   = useRef<HTMLDivElement>(null);
+  const label3Ref   = useRef<HTMLDivElement>(null);
+  const hintRef     = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (typeof window === "undefined" || window.innerWidth < 1024) return;
+
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: sectionRef.current,
+          trigger: desktopRef.current,
           start: "top top",
           end: "bottom bottom",
           scrub: 1.2,
@@ -254,94 +270,131 @@ export default function Process() {
         { opacity: 1, y: 0, filter: "blur(0px)", stagger: 0.22, ease: "power2.out", duration: 1.6 },
         3.2,
       );
-    }, sectionRef);
+    }, desktopRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section
-      id="proceso"
-      ref={sectionRef}
-      className="relative h-[200vh]"
-    >
-      <div
-        className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden"
-        style={{ perspective: "1400px" }}
-      >
-        {/* Same overlay as SocialProof for visual continuity */}
-        <div className="absolute inset-0 z-0 bg-[color:var(--ink)]/55" />
+    <section id="proceso" ref={sectionRef} className="relative">
 
-        {/* ── Heading ── */}
-        <div
-          ref={headRef}
-          className="absolute top-10 md:top-14 inset-x-0 text-center px-4 z-50 pointer-events-none"
-        >
-          <p className="text-[11px] uppercase tracking-[0.35em] text-[color:var(--turquoise)] font-semibold mb-3">
-            Tu camino
-          </p>
-          <h2 className="font-display font-black text-3xl md:text-5xl text-white leading-tight drop-shadow-lg">
-            Tres pasos hacia tu<br />mejor sonrisa
-          </h2>
-        </div>
-
-        {/* ── Phones cluster ── */}
-        <div
-          ref={groupRef}
-          className="relative z-10 flex items-start justify-center"
-        >
-          {/* Left */}
-          <div ref={leftRef} className="relative z-10" style={{ willChange: "transform", backfaceVisibility: "hidden" }}>
-            <Phone><Screen1 /></Phone>
-            <div
-              ref={label1Ref}
-              className="mt-5 text-center opacity-0"
-              style={{ width: LABEL_W }}
-            >
-              <p className="text-white font-display font-black text-xl leading-snug">{steps[0].title}</p>
-              <p className="text-white/65 text-[15px] mt-2 leading-snug px-1">{steps[0].desc}</p>
-            </div>
+      {/* ════════════════════════════════════
+          MÓVIL — pasos verticales
+      ════════════════════════════════════ */}
+      <div className="lg:hidden relative py-16 px-5">
+        <div className="absolute inset-0 bg-[color:var(--ink)]/55 pointer-events-none" />
+        <div className="relative z-10">
+          <div className="text-center mb-10">
+            <p className="text-[11px] uppercase tracking-[0.35em] text-[color:var(--turquoise)] font-semibold mb-3">
+              Tu camino
+            </p>
+            <h2 className="font-display font-black text-3xl text-white leading-tight drop-shadow-lg">
+              Tres pasos hacia tu<br />mejor sonrisa
+            </h2>
           </div>
 
-          {/* Center */}
-          <div ref={centerRef} className="relative z-20" style={{ willChange: "transform", backfaceVisibility: "hidden" }}>
-            <Phone shadow="0 32px 90px rgba(0,0,0,0.70), 0 8px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.05)">
-              <Screen2 />
-            </Phone>
-            <div
-              ref={label2Ref}
-              className="mt-5 text-center opacity-0"
-              style={{ width: LABEL_W }}
-            >
-              <p className="text-white font-display font-black text-xl leading-snug">{steps[1].title}</p>
-              <p className="text-white/65 text-[15px] mt-2 leading-snug px-1">{steps[1].desc}</p>
-            </div>
-          </div>
-
-          {/* Right */}
-          <div ref={rightRef} className="relative z-10" style={{ willChange: "transform", backfaceVisibility: "hidden" }}>
-            <Phone><Screen3 /></Phone>
-            <div
-              ref={label3Ref}
-              className="mt-5 text-center opacity-0"
-              style={{ width: LABEL_W }}
-            >
-              <p className="text-white font-display font-black text-xl leading-snug">{steps[2].title}</p>
-              <p className="text-white/65 text-[15px] mt-2 leading-snug px-1">{steps[2].desc}</p>
-            </div>
+          <div className="space-y-4">
+            {steps.map(({ Icon, title, desc }, i) => (
+              <div
+                key={i}
+                className="flex gap-4 items-start rounded-2xl p-5"
+                style={{
+                  background: "rgba(255,255,255,0.07)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                }}
+              >
+                <div
+                  className="flex-shrink-0 w-11 h-11 rounded-full flex items-center justify-center"
+                  style={{
+                    background: "var(--turquoise-deep)",
+                    minWidth: "2.75rem",
+                    boxShadow: "0 4px 16px rgba(14,122,128,0.35)",
+                  }}
+                >
+                  <Icon className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-white font-display font-black text-[17px] leading-snug mb-1.5">
+                    {title}
+                  </p>
+                  <p className="text-white/65 text-sm leading-relaxed">{desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-
-        {/* ── Scroll hint ── */}
-        <div
-          ref={hintRef}
-          className="absolute bottom-8 z-10 flex flex-col items-center gap-2 pointer-events-none"
-        >
-          <p className="text-white/25 text-[10px] uppercase tracking-[0.3em]">Desplaza</p>
-          <div className="w-px h-7 bg-gradient-to-b from-white/30 to-transparent animate-bounce" />
-        </div>
-
       </div>
+
+      {/* ════════════════════════════════════
+          DESKTOP — GSAP scroll animation
+      ════════════════════════════════════ */}
+      <div ref={desktopRef} className="hidden lg:block h-[200vh]">
+        <div
+          className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden"
+          style={{ perspective: "1400px" }}
+        >
+          {/* Overlay */}
+          <div className="absolute inset-0 z-0 bg-[color:var(--ink)]/55" />
+
+          {/* Heading */}
+          <div
+            ref={headRef}
+            className="absolute top-10 md:top-14 inset-x-0 text-center px-4 z-50 pointer-events-none"
+          >
+            <p className="text-[11px] uppercase tracking-[0.35em] text-[color:var(--turquoise)] font-semibold mb-3">
+              Tu camino
+            </p>
+            <h2 className="font-display font-black text-3xl md:text-5xl text-white leading-tight drop-shadow-lg">
+              Tres pasos hacia tu<br />mejor sonrisa
+            </h2>
+          </div>
+
+          {/* Phones cluster */}
+          <div
+            ref={groupRef}
+            className="relative z-10 flex items-start justify-center"
+          >
+            {/* Left */}
+            <div ref={leftRef} className="relative z-10" style={{ willChange: "transform", backfaceVisibility: "hidden" }}>
+              <Phone><Screen1 /></Phone>
+              <div ref={label1Ref} className="mt-5 text-center opacity-0" style={{ width: LABEL_W }}>
+                <p className="text-white font-display font-black text-xl leading-snug">{steps[0].title}</p>
+                <p className="text-white/65 text-[15px] mt-2 leading-snug px-1">{steps[0].desc}</p>
+              </div>
+            </div>
+
+            {/* Center */}
+            <div ref={centerRef} className="relative z-20" style={{ willChange: "transform", backfaceVisibility: "hidden" }}>
+              <Phone shadow="0 32px 90px rgba(0,0,0,0.70), 0 8px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.05)">
+                <Screen2 />
+              </Phone>
+              <div ref={label2Ref} className="mt-5 text-center opacity-0" style={{ width: LABEL_W }}>
+                <p className="text-white font-display font-black text-xl leading-snug">{steps[1].title}</p>
+                <p className="text-white/65 text-[15px] mt-2 leading-snug px-1">{steps[1].desc}</p>
+              </div>
+            </div>
+
+            {/* Right */}
+            <div ref={rightRef} className="relative z-10" style={{ willChange: "transform", backfaceVisibility: "hidden" }}>
+              <Phone><Screen3 /></Phone>
+              <div ref={label3Ref} className="mt-5 text-center opacity-0" style={{ width: LABEL_W }}>
+                <p className="text-white font-display font-black text-xl leading-snug">{steps[2].title}</p>
+                <p className="text-white/65 text-[15px] mt-2 leading-snug px-1">{steps[2].desc}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Scroll hint */}
+          <div
+            ref={hintRef}
+            className="absolute bottom-8 z-10 flex flex-col items-center gap-2 pointer-events-none"
+          >
+            <p className="text-white/25 text-[10px] uppercase tracking-[0.3em]">Desplaza</p>
+            <div className="w-px h-7 bg-gradient-to-b from-white/30 to-transparent animate-bounce" />
+          </div>
+        </div>
+      </div>
+
     </section>
   );
 }

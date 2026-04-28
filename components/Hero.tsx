@@ -1,8 +1,7 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { Star, ChevronDown } from "lucide-react";
 import { clinic } from "@/lib/data/clinic";
 
@@ -13,18 +12,6 @@ const stats = [
 ];
 
 export default function Hero() {
-  const mobileRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: mobileRef,
-    offset: ["start start", "end end"],
-  });
-
-  // Doctor sube desde abajo y tapa el texto
-  const doctorY = useTransform(scrollYProgress, [0, 0.65], ["100dvh", "0dvh"]);
-  // Texto se difumina al quedar tapado
-  const textOpacity = useTransform(scrollYProgress, [0.25, 0.65], [1, 0]);
-  const textScale  = useTransform(scrollYProgress, [0.25, 0.65], [1, 0.97]);
-
   return (
     <section
       id="top"
@@ -44,34 +31,21 @@ export default function Hero() {
       />
 
       {/* ═══════════════════════════════════════
-          MOBILE — scroll driven reveal
+          MOBILE — layout estático sin scroll
       ═══════════════════════════════════════ */}
       <div
-        ref={mobileRef}
-        className="lg:hidden"
-        style={{ height: "210dvh", position: "relative" }}
+        className="lg:hidden flex flex-col relative"
+        style={{ minHeight: "100dvh" }}
       >
-        {/* TEXTO — sticky, queda fijo mientras el doctor sube */}
+        {/* Texto */}
         <motion.div
-          style={{
-            position: "sticky",
-            top: 0,
-            height: "100dvh",
-            zIndex: 1,
-            opacity: textOpacity,
-            scale: textScale,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            padding: "0 1.5rem",
-            paddingTop: "80px",
-          }}
-          initial={{ y: 20 }}
-          animate={{ y: 0 }}
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.55 }}
+          style={{ padding: "86px 1.375rem 1rem" }}
         >
           <span
-            className="self-start inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold mb-5"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold"
             style={{
               background: "rgba(79,195,199,0.10)",
               color: "var(--turquoise-deep)",
@@ -83,8 +57,8 @@ export default function Hero() {
           </span>
 
           <h1
-            className="font-display font-extrabold leading-[1.03]"
-            style={{ fontSize: "clamp(2.6rem, 10vw, 3.8rem)", color: "var(--ink)" }}
+            className="font-display font-extrabold leading-[1.03] mt-3"
+            style={{ fontSize: "clamp(2.3rem, 9vw, 3.2rem)", color: "var(--ink)" }}
           >
             La sonrisa<br />
             que siempre<br />
@@ -92,18 +66,18 @@ export default function Hero() {
           </h1>
 
           <p
-            className="mt-4 leading-relaxed"
-            style={{ fontSize: 15, color: "var(--ink-soft)", maxWidth: 320 }}
+            className="mt-3 leading-relaxed"
+            style={{ fontSize: 14, color: "var(--ink-soft)", maxWidth: 300 }}
           >
             Más de {clinic.stats.yearsExperience} años transformando sonrisas en
             Medellín, sin miedo ni estrés.
           </p>
 
-          <div className="mt-6 flex gap-3">
+          <div className="mt-4 flex gap-2.5">
             <a
               href="#agendar"
               style={{ background: "var(--turquoise-deep)", color: "#fff" }}
-              className="inline-flex items-center px-6 py-3 rounded-full font-semibold text-sm shadow-md"
+              className="inline-flex items-center px-5 py-2.5 rounded-full font-semibold text-sm shadow-md"
             >
               Agendar cita
             </a>
@@ -116,60 +90,47 @@ export default function Hero() {
                 border: "2px solid rgba(79,195,199,0.35)",
                 background: "rgba(255,255,255,0.7)",
               }}
-              className="inline-flex items-center px-6 py-3 rounded-full font-semibold text-sm"
+              className="inline-flex items-center px-5 py-2.5 rounded-full font-semibold text-sm"
             >
               WhatsApp
             </a>
           </div>
 
           <div
-            className="mt-6 flex gap-6"
-            style={{ paddingTop: "1rem", borderTop: "1px solid rgba(79,195,199,0.18)" }}
+            className="mt-4 flex gap-5"
+            style={{ paddingTop: "0.75rem", borderTop: "1px solid rgba(79,195,199,0.18)" }}
           >
             {stats.map((s) => (
               <div key={s.val} className="flex flex-col">
-                <span className="font-display font-bold text-lg" style={{ color: "var(--turquoise-deep)" }}>
+                <span
+                  className="font-display font-bold text-base"
+                  style={{ color: "var(--turquoise-deep)" }}
+                >
                   {s.val}
                 </span>
-                <span className="text-[11px] mt-0.5" style={{ color: "var(--ink-soft)" }}>
+                <span className="text-[10px] mt-0.5" style={{ color: "var(--ink-soft)" }}>
                   {s.label}
                 </span>
               </div>
             ))}
           </div>
-
-          {/* Scroll hint */}
-          <motion.div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.0 }}
-            style={{ color: "var(--turquoise)" }}
-          >
-            <motion.div
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <ChevronDown className="w-5 h-5" />
-            </motion.div>
-          </motion.div>
         </motion.div>
 
-        {/* DOCTOR — sube y tapa el texto */}
+        {/* Doctor — ocupa el espacio restante hasta el fondo */}
         <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.65, delay: 0.25 }}
           style={{
-            position: "sticky",
-            bottom: 0,
-            height: "92dvh",
-            zIndex: 10,
-            y: doctorY,
-            overflow: "hidden",
+            flex: "1 1 auto",
+            minHeight: "220px",
+            position: "relative",
             borderRadius: "2.5rem 2.5rem 0 0",
             background: "linear-gradient(160deg, var(--turquoise-soft) 0%, #ecf9f9 100%)",
             boxShadow: "0 -20px 64px rgba(14,122,128,0.18)",
+            overflow: "hidden",
           }}
         >
-          {/* Glow inside card */}
           <div
             aria-hidden="true"
             style={{
@@ -185,6 +146,22 @@ export default function Hero() {
             priority
             style={{ objectFit: "contain", objectPosition: "bottom center", mixBlendMode: "multiply" }}
           />
+        </motion.div>
+
+        {/* Scroll hint sobre la foto */}
+        <motion.div
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.0 }}
+          style={{ color: "var(--turquoise)" }}
+        >
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <ChevronDown className="w-5 h-5" />
+          </motion.div>
         </motion.div>
       </div>
 

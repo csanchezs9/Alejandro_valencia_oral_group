@@ -34,7 +34,7 @@ export default function SocialProof() {
       <div className="absolute inset-0 bg-[color:var(--ink)]/55" />
 
       <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/15">
+        <div className="grid grid-cols-2 lg:grid-cols-4">
           {stats.map((s, i) => (
             <motion.div
               key={s.label}
@@ -42,7 +42,14 @@ export default function SocialProof() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="px-6 md:px-10 first:pl-0 last:pr-0 py-2"
+              className={[
+                "px-5 md:px-10 py-2",
+                i === 0 ? "pl-0" : "",
+                i === 3 ? "lg:pr-0" : "",
+                (i === 1 || i === 3) ? "border-l border-white/15" : "",
+                i === 2 ? "lg:border-l lg:border-white/15" : "",
+                (i === 0 || i === 1) ? "pb-7 border-b border-white/10 lg:pb-2 lg:border-b-0" : "pt-7 lg:pt-2",
+              ].join(" ")}
             >
               <div className="w-8 h-[2px] bg-[color:var(--gold)] mb-4" />
               <div className="font-display font-black text-4xl md:text-6xl text-white leading-none tracking-tight">
