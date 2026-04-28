@@ -81,7 +81,7 @@ export default function Services() {
           ))}
         </motion.div>
 
-        {hasMore && !showAll && (
+        {hasMore && (
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -89,10 +89,10 @@ export default function Services() {
             className="mt-10 flex justify-center"
           >
             <button
-              onClick={() => setShowAll(true)}
+              onClick={() => setShowAll((v) => !v)}
               className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-semibold text-sm border-2 border-[color:var(--turquoise)]/40 text-[color:var(--turquoise-deep)] hover:bg-[color:var(--turquoise-soft)] transition-colors"
             >
-              Ver más servicios <ArrowRight className="w-4 h-4" />
+              {showAll ? "Ver menos" : "Ver más servicios"} <ArrowRight className={`w-4 h-4 transition-transform ${showAll ? "rotate-[-90deg]" : ""}`} />
             </button>
           </motion.div>
         )}
