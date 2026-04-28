@@ -35,7 +35,7 @@ export default function Hero() {
       ═══════════════════════════════════════ */}
       <div
         className="lg:hidden flex flex-col relative"
-        style={{ minHeight: "100dvh" }}
+        style={{ minHeight: "100svh" }}
       >
         {/* Texto */}
         <motion.div
@@ -144,6 +144,7 @@ export default function Hero() {
             alt={`${clinic.doctor.prefix} ${clinic.doctor.name} – Ortodoncista en Medellín`}
             fill
             priority
+            sizes="(max-width: 768px) 100vw, 50vw"
             style={{ objectFit: "contain", objectPosition: "bottom center", mixBlendMode: "multiply" }}
           />
         </motion.div>
@@ -170,7 +171,7 @@ export default function Hero() {
       ═══════════════════════════════════════ */}
       <div
         className="hidden lg:flex max-w-7xl mx-auto px-10 flex-col justify-center"
-        style={{ minHeight: "100dvh" }}
+        style={{ minHeight: "100svh" }}
       >
         <motion.div
           initial={{ opacity: 0, y: 28 }}
@@ -305,6 +306,7 @@ export default function Hero() {
             src={clinic.doctor.photo}
             alt={`${clinic.doctor.prefix} ${clinic.doctor.name} – Ortodoncista en Medellín`}
             fill priority
+            sizes="(max-width: 768px) 100vw, 50vw"
             style={{ objectFit: "contain", objectPosition: "bottom center", mixBlendMode: "multiply" }}
           />
           <div aria-hidden="true" style={{
