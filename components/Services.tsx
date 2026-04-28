@@ -24,9 +24,14 @@ const categories = [
   { key: "general", label: "General" },
 ] as const;
 
+const MAX_VISIBLE = 6;
+
 export default function Services() {
   const [filter, setFilter] = useState<(typeof categories)[number]["key"]>("ortodoncia");
+  const [showAll, setShowAll] = useState(false);
   const filtered = services.filter((s) => s.category === filter);
+  const visible = showAll ? filtered : filtered.slice(0, MAX_VISIBLE);
+  const hasMore = filtered.length > MAX_VISIBLE;
 
   return (
     <section id="servicios" className="relative py-20 md:py-28 bg-[color:var(--off-white)]">
@@ -55,7 +60,7 @@ export default function Services() {
           {categories.map((c) => (
             <button
               key={c.key}
-              onClick={() => setFilter(c.key)}
+              onClick={() => { setFilter(c.key); setShowAll(false); }}
               className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
                 filter === c.key
                   ? "bg-[color:var(--ink)] text-white shadow-md"
@@ -71,10 +76,26 @@ export default function Services() {
           layout
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {filtered.map((s, i) => (
+          {visible.map((s, i) => (
             <ServiceCard key={s.slug} service={s} delay={Math.min(i * 0.05, 0.4)} />
           ))}
         </motion.div>
+
+        {hasMore && !showAll && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
+            className="mt-10 flex justify-center"
+          >
+            <button
+              onClick={() => setShowAll(true)}
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-semibold text-sm border-2 border-[color:var(--turquoise)]/40 text-[color:var(--turquoise-deep)] hover:bg-[color:var(--turquoise-soft)] transition-colors"
+            >
+              Ver más servicios <ArrowRight className="w-4 h-4" />
+            </button>
+          </motion.div>
+        )}
       </div>
     </section>
   );
