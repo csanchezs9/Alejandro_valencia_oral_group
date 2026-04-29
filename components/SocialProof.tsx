@@ -29,7 +29,7 @@ const stats = [
 
 export default function SocialProof() {
   return (
-    <section className="relative py-16 md:py-24 overflow-hidden">
+    <section className="relative pt-8 md:pt-10 pb-16 md:pb-24 overflow-hidden">
       {/* Dark overlay over shared background */}
       <div className="absolute inset-0 bg-[color:var(--ink)]/55" />
 
