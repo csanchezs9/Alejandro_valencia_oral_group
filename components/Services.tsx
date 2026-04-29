@@ -7,7 +7,8 @@ import {
   ShieldCheck, ClipboardList, Atom, ArrowRight,
 } from "lucide-react";
 import { services, type Service } from "@/lib/data/clinic";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
+import { useLenis } from "@/components/SmoothScroll";
 import Reveal from "@/components/Reveal";
 import Image from "next/image";
 
@@ -33,46 +34,61 @@ export default function Services() {
   const visible = showAll ? filtered : filtered.slice(0, MAX_VISIBLE);
   const hasMore = filtered.length > MAX_VISIBLE;
 
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
-  const collapseRequested = useRef(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const lenisRef = useLenis();
 
-  const toggleShowAll = () => {
-    if (showAll) collapseRequested.current = true;
-    setShowAll((v) => !v);
-  };
-
-  useLayoutEffect(() => {
-    if (showAll || !collapseRequested.current) return;
-    collapseRequested.current = false;
-
-    const html = document.documentElement;
-    const prevBehavior = html.style.scrollBehavior;
-    html.style.scrollBehavior = "auto";
+  /** Scroll the viewport so the top of the treatments section is just below the navbar. */
+  const scrollToSection = useCallback(() => {
+    const section = sectionRef.current;
+    if (!section) return;
 
     const NAV_OFFSET = 88;
+    const lenis = lenisRef.current;
 
-    const scrollToGridTop = () => {
-      const grid = gridRef.current;
-      if (!grid) return;
-      const gridRect = grid.getBoundingClientRect();
-      const targetTop = window.scrollY + gridRect.top - NAV_OFFSET;
-      window.scrollTo(0, Math.max(0, targetTop));
+    // 1. Stop Lenis so it doesn't fight our programmatic scroll
+    if (lenis) lenis.stop();
+
+    // 2. Immediately snap scroll to the section top
+    const doSnap = () => {
+      const rect = section.getBoundingClientRect();
+      const target = window.scrollY + rect.top - NAV_OFFSET;
+      window.scrollTo({ top: Math.max(0, target), behavior: "instant" as ScrollBehavior });
     };
 
-    // Run once now, then again after popLayout/exit animation has settled.
-    scrollToGridTop();
-    requestAnimationFrame(() => {
-      scrollToGridTop();
+    doSnap();
+
+    // 3. Keep correcting across multiple frames while Framer Motion settles exit animations.
+    //    The exit animations last ~180ms (see ServiceCard exit), so we poll for 350ms.
+    let elapsed = 0;
+    const INTERVAL = 16; // ~1 frame
+    const MAX_DURATION = 350;
+
+    const timer = setInterval(() => {
+      elapsed += INTERVAL;
+      doSnap();
+      if (elapsed >= MAX_DURATION) {
+        clearInterval(timer);
+        // 4. Re-enable Lenis smooth scrolling now that everything has settled
+        if (lenis) lenis.start();
+      }
+    }, INTERVAL);
+  }, [lenisRef]);
+
+  const toggleShowAll = () => {
+    if (showAll) {
+      // Collapsing: first set state, then scroll on next tick
+      setShowAll(false);
+      // Use requestAnimationFrame so React has committed the DOM update (fewer cards)
       requestAnimationFrame(() => {
-        scrollToGridTop();
-        html.style.scrollBehavior = prevBehavior;
+        scrollToSection();
       });
-    });
-  }, [showAll, visible.length]);
+    } else {
+      setShowAll(true);
+    }
+  };
 
   return (
-    <section id="servicios" className="relative pt-10 md:pt-14 pb-10 md:pb-14 bg-[color:var(--off-white)]">
+    <section ref={sectionRef} id="servicios" className="relative pt-10 md:pt-14 pb-10 md:pb-14 bg-[color:var(--off-white)]">
       <div className="px-5 sm:px-8 lg:px-16 xl:px-24 lg:pr-12">
         <Reveal className="max-w-2xl mb-12">
           <div className="text-xs uppercase tracking-[0.25em] text-[color:var(--turquoise-deep)] font-semibold mb-4">
@@ -110,8 +126,8 @@ export default function Services() {
           ))}
         </motion.div>
 
-        <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence initial={false} mode="popLayout">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <AnimatePresence initial={false} mode="sync">
             {visible.map((s, i) => (
               <ServiceCard
                 key={`${filter}-${s.slug}`}
@@ -125,7 +141,6 @@ export default function Services() {
         {hasMore && (
           <div className="mt-10 flex justify-center">
             <button
-              ref={buttonRef}
               onClick={toggleShowAll}
               className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-semibold text-sm border-2 border-[color:var(--turquoise)]/40 text-[color:var(--turquoise-deep)] hover:bg-[color:var(--turquoise-soft)] transition-colors"
             >
