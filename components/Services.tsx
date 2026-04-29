@@ -34,29 +34,41 @@ export default function Services() {
   const hasMore = filtered.length > MAX_VISIBLE;
 
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const buttonTopBefore = useRef<number | null>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const collapseRequested = useRef(false);
 
   const toggleShowAll = () => {
-    if (showAll && buttonRef.current) {
-      buttonTopBefore.current = buttonRef.current.getBoundingClientRect().top;
-    }
+    if (showAll) collapseRequested.current = true;
     setShowAll((v) => !v);
   };
 
   useLayoutEffect(() => {
-    if (showAll) return;
-    if (buttonTopBefore.current == null || !buttonRef.current) return;
-    buttonTopBefore.current = null;
+    if (showAll || !collapseRequested.current) return;
+    collapseRequested.current = false;
 
     const html = document.documentElement;
     const prevBehavior = html.style.scrollBehavior;
     html.style.scrollBehavior = "auto";
 
-    const rect = buttonRef.current.getBoundingClientRect();
-    const targetTop = window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
-    window.scrollTo({ top: Math.max(0, targetTop), behavior: "auto" });
+    const NAV_OFFSET = 88;
 
-    html.style.scrollBehavior = prevBehavior;
+    const scrollToGridTop = () => {
+      const grid = gridRef.current;
+      if (!grid) return;
+      const gridRect = grid.getBoundingClientRect();
+      const targetTop = window.scrollY + gridRect.top - NAV_OFFSET;
+      window.scrollTo(0, Math.max(0, targetTop));
+    };
+
+    // Run once now, then again after popLayout/exit animation has settled.
+    scrollToGridTop();
+    requestAnimationFrame(() => {
+      scrollToGridTop();
+      requestAnimationFrame(() => {
+        scrollToGridTop();
+        html.style.scrollBehavior = prevBehavior;
+      });
+    });
   }, [showAll, visible.length]);
 
   return (
@@ -98,7 +110,7 @@ export default function Services() {
           ))}
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence initial={false} mode="popLayout">
             {visible.map((s, i) => (
               <ServiceCard
