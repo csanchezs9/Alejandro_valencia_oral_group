@@ -1,13 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   Sparkles, UserRound, Baby, Smile, Star, Grid3x3, Zap, EyeOff,
   Cpu, Flashlight, Stethoscope, Wrench, Gem, Heart, Candy,
   ShieldCheck, ClipboardList, Atom, ArrowRight,
 } from "lucide-react";
 import { services, type Service } from "@/lib/data/clinic";
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import Reveal from "@/components/Reveal";
 import Image from "next/image";
 
@@ -32,6 +32,28 @@ export default function Services() {
   const filtered = services.filter((s) => s.category === filter);
   const visible = showAll ? filtered : filtered.slice(0, MAX_VISIBLE);
   const hasMore = filtered.length > MAX_VISIBLE;
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const buttonTopBefore = useRef<number | null>(null);
+
+  const toggleShowAll = () => {
+    if (showAll && buttonRef.current) {
+      buttonTopBefore.current = buttonRef.current.getBoundingClientRect().top;
+    }
+    setShowAll((v) => !v);
+  };
+
+  useLayoutEffect(() => {
+    if (showAll) return;
+    const before = buttonTopBefore.current;
+    if (before == null || !buttonRef.current) return;
+    buttonTopBefore.current = null;
+    const after = buttonRef.current.getBoundingClientRect().top;
+    const delta = after - before;
+    if (Math.abs(delta) > 1) {
+      window.scrollBy({ top: delta, behavior: "auto" });
+    }
+  }, [showAll, visible.length]);
 
   return (
     <section id="servicios" className="relative pt-10 md:pt-14 pb-10 md:pb-14 bg-[color:var(--off-white)]">
@@ -74,22 +96,31 @@ export default function Services() {
 
         <motion.div
           layout
+          transition={{ layout: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } }}
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {visible.map((s, i) => (
-            <ServiceCard key={s.slug} service={s} delay={Math.min(i * 0.05, 0.4)} />
-          ))}
+          <AnimatePresence initial={false} mode="popLayout">
+            {visible.map((s, i) => (
+              <ServiceCard
+                key={`${filter}-${s.slug}`}
+                service={s}
+                delay={i < MAX_VISIBLE ? Math.min(i * 0.04, 0.2) : (i - MAX_VISIBLE) * 0.04}
+              />
+            ))}
+          </AnimatePresence>
         </motion.div>
 
         {hasMore && (
           <motion.div
+            layout
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35 }}
             className="mt-10 flex justify-center"
           >
             <button
-              onClick={() => setShowAll((v) => !v)}
+              ref={buttonRef}
+              onClick={toggleShowAll}
               className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-semibold text-sm border-2 border-[color:var(--turquoise)]/40 text-[color:var(--turquoise-deep)] hover:bg-[color:var(--turquoise-soft)] transition-colors"
             >
               {showAll ? "Ver menos" : "Ver más servicios"} <ArrowRight className={`w-4 h-4 transition-transform ${showAll ? "rotate-[-90deg]" : ""}`} />
@@ -108,10 +139,10 @@ function ServiceCard({ service, delay }: { service: Service; delay: number }) {
     <motion.a
       layout
       href="#contacto"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay }}
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 8, scale: 0.97 }}
+      transition={{ duration: 0.4, delay, ease: [0.22, 1, 0.36, 1] }}
       className="group relative bg-white rounded-3xl border border-[color:var(--silver)]/15 hover:border-[color:var(--turquoise)]/40 shadow-sm hover:shadow-xl hover:shadow-[color:var(--turquoise)]/10 transition-all overflow-hidden flex flex-col"
     >
       {/* Image banner */}
