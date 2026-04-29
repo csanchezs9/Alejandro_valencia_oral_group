@@ -62,7 +62,7 @@ export default function Hero() {
           "shadow-[0_-16px_48px_rgba(14,122,128,0.18)]",
           // desktop: left column, no card treatment, centered vertically
           "lg:absolute lg:inset-y-0 lg:left-0 lg:mt-0 lg:rounded-none lg:bg-transparent lg:shadow-none",
-          "lg:flex lg:flex-col lg:justify-center lg:w-[60%] lg:pl-16 xl:pl-24 lg:pr-12 lg:pt-28 xl:pt-24",
+          "lg:flex lg:flex-col lg:justify-center lg:w-[60%] lg:pl-[max(2rem,calc((100vw-80rem)/2+2rem))] lg:pr-12 lg:pt-28 xl:pt-24",
         ].join(" ")}
       >
         <h1
