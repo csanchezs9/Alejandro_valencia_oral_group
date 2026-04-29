@@ -10,7 +10,7 @@ export default function AboutDoctor() {
       <div className="absolute inset-0 bg-gradient-to-br from-[color:var(--turquoise-soft)]/40 via-[color:var(--off-white)] to-white" />
       <div className="absolute right-0 top-0 w-1/3 h-full mesh-glow opacity-60 pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-8 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div className="relative px-5 sm:px-8 lg:px-16 xl:px-24 lg:pr-12 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         {/* Image */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}

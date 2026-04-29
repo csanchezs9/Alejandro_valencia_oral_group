@@ -22,7 +22,7 @@ export default function Location() {
 
   return (
     <section id="ubicacion" className="relative py-20 md:py-28 bg-white">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+      <div className="px-5 sm:px-8 lg:px-16 xl:px-24 lg:pr-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

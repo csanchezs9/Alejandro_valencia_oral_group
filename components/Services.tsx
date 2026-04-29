@@ -35,7 +35,7 @@ export default function Services() {
 
   return (
     <section id="servicios" className="relative py-20 md:py-28 bg-[color:var(--off-white)]">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+      <div className="px-5 sm:px-8 lg:px-16 xl:px-24 lg:pr-12">
         <Reveal className="max-w-2xl mb-12">
           <div className="text-xs uppercase tracking-[0.25em] text-[color:var(--turquoise-deep)] font-semibold mb-4">
             Tratamientos

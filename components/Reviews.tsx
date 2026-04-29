@@ -40,7 +40,7 @@ function ReviewCard({ r }: { r: (typeof REVIEWS)[number] }) {
 export default function Reviews() {
   return (
     <section className="relative pt-20 md:pt-28 pb-10 md:pb-12 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+      <div className="px-5 sm:px-8 lg:px-16 xl:px-24 lg:pr-12">
         <Reveal className="text-center max-w-2xl mx-auto mb-12">
           <div className="text-xs uppercase tracking-[0.25em] text-[color:var(--turquoise-deep)] font-semibold mb-4">
             Experiencia de nuestros clientes

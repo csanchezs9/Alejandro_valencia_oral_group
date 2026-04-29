@@ -33,7 +33,7 @@ export default function SocialProof() {
       {/* Dark overlay over shared background */}
       <div className="absolute inset-0 bg-[color:var(--ink)]/55" />
 
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-8">
+      <div className="relative px-5 sm:px-8 lg:px-16 xl:px-24 lg:pr-12">
         <div className="grid grid-cols-2 lg:grid-cols-4">
           {stats.map((s, i) => (
             <motion.div

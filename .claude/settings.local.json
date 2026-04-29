@@ -12,7 +12,12 @@
       "Read(//c/c/Users/camil/OneDrive/Documents/Oral_Group/web/app/**)",
       "Bash(cat next.config.ts)",
       "Bash(cat next.config.js)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git checkout *)",
+      "Bash(git commit *)"
     ]
   }
 }

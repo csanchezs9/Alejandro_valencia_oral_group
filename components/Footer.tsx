@@ -14,7 +14,7 @@ function Instagram({ className = "" }: { className?: string }) {
 export default function Footer() {
   return (
     <footer className="bg-[color:var(--ink)] text-white/80 pt-16 pb-8 border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8">
+      <div className="px-5 sm:px-8 lg:px-16 xl:px-24 lg:pr-12">
         <div className="grid md:grid-cols-4 gap-10 mb-10">
           <div className="md:col-span-2">
             <div className="mb-4">
