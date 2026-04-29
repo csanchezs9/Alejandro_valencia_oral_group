@@ -7,7 +7,7 @@ import {
   ShieldCheck, ClipboardList, Atom, ArrowRight,
 } from "lucide-react";
 import { services, type Service } from "@/lib/data/clinic";
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import Reveal from "@/components/Reveal";
 import Image from "next/image";
 
@@ -32,9 +32,45 @@ export default function Services() {
   const filtered = services.filter((s) => s.category === filter);
   const visible = showAll ? filtered : filtered.slice(0, MAX_VISIBLE);
   const hasMore = filtered.length > MAX_VISIBLE;
+  const gridRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const shouldRestore = useRef(false);
+
+  const toggleShowAll = () => {
+    if (showAll) {
+      shouldRestore.current = true;
+      setShowAll(false);
+    } else {
+      setShowAll(true);
+    }
+  };
+
+  useLayoutEffect(() => {
+    if (showAll || !shouldRestore.current) return;
+    shouldRestore.current = false;
+    const btn = buttonRef.current;
+    if (!btn) return;
+
+    const html = document.documentElement;
+    const prev = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
+
+    const scrollToCenter = () => {
+      const rect = btn.getBoundingClientRect();
+      const docTop = rect.top + window.scrollY;
+      const targetY = docTop - window.innerHeight / 2 + rect.height / 2;
+      window.scrollTo(0, Math.max(0, targetY));
+    };
+
+    scrollToCenter();
+    requestAnimationFrame(() => {
+      scrollToCenter();
+      html.style.scrollBehavior = prev;
+    });
+  }, [showAll]);
 
   return (
-    <section id="servicios" className="relative py-20 md:py-28 bg-[color:var(--off-white)]">
+    <section id="servicios" className="relative pt-12 md:pt-16 pb-12 md:pb-16 bg-[color:var(--off-white)]">
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <Reveal className="max-w-2xl mb-12">
           <div className="text-xs uppercase tracking-[0.25em] text-[color:var(--turquoise-deep)] font-semibold mb-4">
@@ -72,14 +108,19 @@ export default function Services() {
           ))}
         </motion.div>
 
-        <motion.div
-          layout
+        <div
+          ref={gridRef}
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {visible.map((s, i) => (
-            <ServiceCard key={s.slug} service={s} delay={Math.min(i * 0.05, 0.4)} />
+            <ServiceCard
+              key={s.slug}
+              service={s}
+              delay={i < MAX_VISIBLE ? Math.min(i * 0.05, 0.25) : 0}
+              animateIn={i < MAX_VISIBLE}
+            />
           ))}
-        </motion.div>
+        </div>
 
         {hasMore && (
           <motion.div
@@ -89,7 +130,8 @@ export default function Services() {
             className="mt-10 flex justify-center"
           >
             <button
-              onClick={() => setShowAll((v) => !v)}
+              ref={buttonRef}
+              onClick={toggleShowAll}
               className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-semibold text-sm border-2 border-[color:var(--turquoise)]/40 text-[color:var(--turquoise-deep)] hover:bg-[color:var(--turquoise-soft)] transition-colors"
             >
               {showAll ? "Ver menos" : "Ver más servicios"} <ArrowRight className={`w-4 h-4 transition-transform ${showAll ? "rotate-[-90deg]" : ""}`} />
@@ -101,17 +143,16 @@ export default function Services() {
   );
 }
 
-function ServiceCard({ service, delay }: { service: Service; delay: number }) {
+function ServiceCard({ service, delay, animateIn }: { service: Service; delay: number; animateIn: boolean }) {
   const Icon = iconMap[service.icon] ?? Sparkles;
 
   return (
     <motion.a
-      layout
       href="#contacto"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={animateIn ? { opacity: 0, y: 24 } : false}
+      whileInView={animateIn ? { opacity: 1, y: 0 } : undefined}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay }}
+      transition={{ duration: 0.4, delay }}
       className="group relative bg-white rounded-3xl border border-[color:var(--silver)]/15 hover:border-[color:var(--turquoise)]/40 shadow-sm hover:shadow-xl hover:shadow-[color:var(--turquoise)]/10 transition-all overflow-hidden flex flex-col"
     >
       {/* Image banner */}

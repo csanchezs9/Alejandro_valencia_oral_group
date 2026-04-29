@@ -62,29 +62,25 @@ export default function Hero() {
           "shadow-[0_-16px_48px_rgba(14,122,128,0.18)]",
           // desktop: left column, no card treatment, centered vertically
           "lg:absolute lg:inset-y-0 lg:left-0 lg:mt-0 lg:rounded-none lg:bg-transparent lg:shadow-none",
-          "lg:flex lg:flex-col lg:justify-center lg:w-[48%] lg:pl-[5.5rem] lg:pr-8",
+          "lg:flex lg:flex-col lg:justify-center lg:w-[60%] lg:pl-16 xl:pl-24 lg:pr-12 lg:pt-28 xl:pt-24",
         ].join(" ")}
       >
-        {/* Eyebrow — desktop only */}
-        <motion.p
-          initial={{ opacity: 0, x: -12 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-          className="hidden lg:block mb-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-[color:var(--turquoise)]"
-        >
-          Ortodoncista · El Poblado, Medellín
-        </motion.p>
-
         <h1
-          className="font-display font-extrabold leading-[1.03] text-[color:var(--ink)]"
-          style={{ fontSize: "clamp(2rem, 7vw, 5rem)" }}
+          className="font-display font-extrabold leading-[1.03] text-[color:var(--ink)] lg:max-w-[14ch]"
+          style={{ fontSize: "clamp(2rem, 5.4vw, 5rem)" }}
         >
-          La sonrisa<br />
-          que siempre<br />
-          <span className="text-[color:var(--turquoise-deep)]">soñaste.</span>
+          <span className="lg:hidden">
+            La sonrisa<br />
+            que siempre<br />
+            <span className="text-[color:var(--turquoise-deep)]">soñaste.</span>
+          </span>
+          <span className="hidden lg:inline">
+            La sonrisa que siempre{" "}
+            <span className="text-[color:var(--turquoise-deep)]">soñaste.</span>
+          </span>
         </h1>
 
-        <p className="mt-3 lg:mt-6 text-sm lg:text-base leading-relaxed text-[color:var(--ink-soft)] max-w-xs lg:max-w-[380px]">
+        <p className="mt-3 lg:mt-6 text-sm lg:text-lg leading-relaxed text-[color:var(--ink-soft)] max-w-xs lg:max-w-[520px]">
           <span className="lg:hidden">
             Más de {clinic.stats.yearsExperience} años transformando sonrisas en Medellín, sin miedo ni estrés.
           </span>
