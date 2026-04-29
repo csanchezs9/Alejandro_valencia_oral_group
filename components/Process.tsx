@@ -97,7 +97,7 @@ export default function Process() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.6, delay: i * 0.15 }}
-              className="relative flex flex-col rounded-3xl p-7 md:p-8"
+              className="relative flex flex-col rounded-3xl p-5 sm:p-7 md:p-8"
               style={{
                 background: "rgba(11,43,58,0.80)",
                 border: "1px solid rgba(255,255,255,0.12)",
@@ -127,17 +127,17 @@ export default function Process() {
               </h3>
 
               {/* desc */}
-              <p className="text-white/55 text-[15px] leading-relaxed flex-1 mb-6">
+              <p className="text-white/55 text-sm sm:text-[15px] leading-relaxed flex-1 mb-6">
                 {desc}
               </p>
 
               {/* stat block */}
               <div
-                className="rounded-2xl px-5 py-4 mb-5"
+                className="rounded-2xl px-4 py-3 sm:px-5 sm:py-4 mb-5"
                 style={{ background: accentBg }}
               >
                 <p
-                  className="font-display font-black text-3xl leading-none mb-1"
+                  className="font-display font-black text-2xl sm:text-3xl leading-none mb-1"
                   style={{ color: accent }}
                 >
                   {stat}

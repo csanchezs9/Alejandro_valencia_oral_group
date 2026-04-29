@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MessageCircle } from "lucide-react";
 import { clinic } from "@/lib/data/clinic";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 
 export default function WhatsAppFab() {
   const msg = encodeURIComponent(
@@ -21,9 +21,8 @@ export default function WhatsAppFab() {
       className="fixed bottom-5 right-5 md:bottom-7 md:right-7 z-40 group"
     >
       <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-30" />
-      <span className="relative flex items-center gap-3 bg-[#25D366] text-white pl-4 pr-5 py-3.5 rounded-full shadow-2xl shadow-[#25D366]/30 hover:bg-[#1ebe5a] transition-colors">
-        <MessageCircle className="w-5 h-5 shrink-0" />
-        <span className="hidden sm:inline font-semibold text-sm">WhatsApp</span>
+      <span className="relative flex items-center justify-center bg-[#25D366] text-white w-14 h-14 rounded-full shadow-2xl shadow-[#25D366]/30 hover:bg-[#1ebe5a] transition-colors">
+        <WhatsAppIcon size={28} />
       </span>
     </motion.a>
   );

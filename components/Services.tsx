@@ -43,7 +43,7 @@ export default function Services() {
           <h2 className="font-display font-bold text-3xl md:text-5xl text-[color:var(--ink)] leading-tight">
             Soluciones para cada sonrisa
           </h2>
-          <p className="mt-5 text-[color:var(--ink-soft)] text-lg">
+          <p className="mt-5 text-[color:var(--ink-soft)] text-base sm:text-lg">
             Desde ortodoncia invisible hasta diseño integral, con tecnología de vanguardia
             y un enfoque 100% personalizado.
           </p>
@@ -116,7 +116,7 @@ function ServiceCard({ service, delay }: { service: Service; delay: number }) {
     >
       {/* Image banner */}
       {service.image && (
-        <div className="relative h-52 overflow-hidden">
+        <div className="relative h-40 sm:h-52 overflow-hidden">
           <Image
             src={service.image}
             alt={service.title}

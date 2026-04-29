@@ -19,7 +19,7 @@ export default function AboutDoctor() {
           transition={{ duration: 0.7 }}
           className="relative order-2 lg:order-1"
         >
-          <div className="relative aspect-[4/5] max-w-md mx-auto lg:mx-0">
+          <div className="relative aspect-[3/4] sm:aspect-[4/5] max-w-md mx-auto lg:mx-0">
             <div className="absolute -top-4 -left-4 w-full h-full rounded-[2.5rem] border-2 border-[color:var(--gold)]/40" />
             <div className="absolute -bottom-4 -right-4 w-full h-full rounded-[2.5rem] bg-[color:var(--turquoise)]/15" />
             <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden shadow-2xl shadow-[color:var(--ink)]/20">
@@ -53,7 +53,7 @@ export default function AboutDoctor() {
             {clinic.doctor.specialty}
           </div>
 
-          <p className="mt-6 text-[color:var(--ink-soft)] text-lg leading-relaxed">
+          <p className="mt-6 text-[color:var(--ink-soft)] text-base sm:text-lg leading-relaxed">
             {clinic.doctor.bioShort}
           </p>
 
@@ -88,7 +88,7 @@ export default function AboutDoctor() {
               Áreas de experticia
             </div>
             <div className="flex flex-wrap gap-2">
-              {clinic.doctor.expertise.map((e, i) => (
+              {clinic.doctor.expertise.slice(0, 4).map((e, i) => (
                 <motion.span
                   key={e}
                   initial={{ opacity: 0, scale: 0.9 }}

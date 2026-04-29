@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Sparkles, X } from "lucide-react";
+import { Sparkles, X, ChevronLeft, ChevronRight } from "lucide-react";
 import Reveal from "@/components/Reveal";
 
 const cases = [
@@ -388,25 +388,57 @@ export default function BeforeAfter() {
           ))}
         </div>
 
-        {/* Mobile: dots */}
-        <div className="sm:hidden flex justify-center gap-2 mt-5">
-          {cases.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => scrollTo(i)}
-              aria-label={`Caso ${i + 1}`}
-              style={{
-                width: activeIndex === i ? 20 : 6,
-                height: 6,
-                borderRadius: 3,
-                border: "none",
-                cursor: "pointer",
-                padding: 0,
-                transition: "all 0.3s ease",
-                background: activeIndex === i ? "var(--turquoise-deep)" : "rgba(79,195,199,0.3)",
-              }}
-            />
-          ))}
+        {/* Mobile: flechas + dots */}
+        <div className="sm:hidden flex items-center justify-center gap-4 mt-5">
+          <button
+            onClick={() => scrollTo(activeIndex - 1)}
+            disabled={activeIndex === 0}
+            aria-label="Anterior"
+            className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
+            style={{
+              background: activeIndex === 0 ? "rgba(79,195,199,0.12)" : "var(--turquoise-deep)",
+              color: activeIndex === 0 ? "rgba(79,195,199,0.4)" : "#fff",
+              border: "none",
+              cursor: activeIndex === 0 ? "default" : "pointer",
+            }}
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+
+          <div className="flex gap-2">
+            {cases.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => scrollTo(i)}
+                aria-label={`Caso ${i + 1}`}
+                style={{
+                  width: activeIndex === i ? 20 : 6,
+                  height: 6,
+                  borderRadius: 3,
+                  border: "none",
+                  cursor: "pointer",
+                  padding: 0,
+                  transition: "all 0.3s ease",
+                  background: activeIndex === i ? "var(--turquoise-deep)" : "rgba(79,195,199,0.3)",
+                }}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() => scrollTo(activeIndex + 1)}
+            disabled={activeIndex === cases.length - 1}
+            aria-label="Siguiente"
+            className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
+            style={{
+              background: activeIndex === cases.length - 1 ? "rgba(79,195,199,0.12)" : "var(--turquoise-deep)",
+              color: activeIndex === cases.length - 1 ? "rgba(79,195,199,0.4)" : "#fff",
+              border: "none",
+              cursor: activeIndex === cases.length - 1 ? "default" : "pointer",
+            }}
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
 
         {/* Desktop: 3-col grid */}

@@ -17,16 +17,10 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-5 sm:px-8">
         <div className="grid md:grid-cols-4 gap-10 mb-10">
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-[color:var(--turquoise)] to-[color:var(--turquoise-deep)] flex items-center justify-center shadow-sm">
-                <span className="text-white font-display font-bold text-lg leading-none">O</span>
-                <span className="absolute -right-0.5 -bottom-0.5 w-2 h-2 rounded-full bg-[color:var(--gold)]" />
-              </div>
-              <div>
-                <div className="font-display font-bold text-white text-lg">{clinic.brand}</div>
-                <div className="text-[10px] uppercase tracking-[0.18em] text-white/50">
-                  Ortodoncia · Medellín
-                </div>
+            <div className="mb-4">
+              <div className="font-display font-bold text-white text-lg">{clinic.brand}</div>
+              <div className="text-[10px] uppercase tracking-[0.18em] text-white/50 mt-0.5">
+                Ortodoncia · Medellín
               </div>
             </div>
             <p className="text-sm text-white/60 max-w-md leading-relaxed">
