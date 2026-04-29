@@ -48,11 +48,17 @@ export default function Services() {
     const before = buttonTopBefore.current;
     if (before == null || !buttonRef.current) return;
     buttonTopBefore.current = null;
+
+    const html = document.documentElement;
+    const prevBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
+
     const after = buttonRef.current.getBoundingClientRect().top;
     const delta = after - before;
-    if (Math.abs(delta) > 1) {
+    if (Math.abs(delta) > 0.5) {
       window.scrollBy({ top: delta, behavior: "auto" });
     }
+    html.style.scrollBehavior = prevBehavior;
   }, [showAll, visible.length]);
 
   return (
@@ -94,30 +100,20 @@ export default function Services() {
           ))}
         </motion.div>
 
-        <motion.div
-          layout
-          transition={{ layout: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } }}
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence initial={false} mode="popLayout">
             {visible.map((s, i) => (
               <ServiceCard
                 key={`${filter}-${s.slug}`}
                 service={s}
-                delay={i < MAX_VISIBLE ? Math.min(i * 0.04, 0.2) : (i - MAX_VISIBLE) * 0.04}
+                delay={i < MAX_VISIBLE ? Math.min(i * 0.035, 0.18) : Math.min((i - MAX_VISIBLE) * 0.04, 0.2)}
               />
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
         {hasMore && (
-          <motion.div
-            layout
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            className="mt-10 flex justify-center"
-          >
+          <div className="mt-10 flex justify-center">
             <button
               ref={buttonRef}
               onClick={toggleShowAll}
@@ -125,7 +121,7 @@ export default function Services() {
             >
               {showAll ? "Ver menos" : "Ver más servicios"} <ArrowRight className={`w-4 h-4 transition-transform ${showAll ? "rotate-[-90deg]" : ""}`} />
             </button>
-          </motion.div>
+          </div>
         )}
       </div>
     </section>
@@ -137,11 +133,10 @@ function ServiceCard({ service, delay }: { service: Service; delay: number }) {
 
   return (
     <motion.a
-      layout
       href="#contacto"
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 8, scale: 0.97 }}
+      exit={{ opacity: 0, transition: { duration: 0.18, ease: "easeOut" } }}
       transition={{ duration: 0.4, delay, ease: [0.22, 1, 0.36, 1] }}
       className="group relative bg-white rounded-3xl border border-[color:var(--silver)]/15 hover:border-[color:var(--turquoise)]/40 shadow-sm hover:shadow-xl hover:shadow-[color:var(--turquoise)]/10 transition-all overflow-hidden flex flex-col"
     >
