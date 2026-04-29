@@ -45,19 +45,17 @@ export default function Services() {
 
   useLayoutEffect(() => {
     if (showAll) return;
-    const before = buttonTopBefore.current;
-    if (before == null || !buttonRef.current) return;
+    if (buttonTopBefore.current == null || !buttonRef.current) return;
     buttonTopBefore.current = null;
 
     const html = document.documentElement;
     const prevBehavior = html.style.scrollBehavior;
     html.style.scrollBehavior = "auto";
 
-    const after = buttonRef.current.getBoundingClientRect().top;
-    const delta = after - before;
-    if (Math.abs(delta) > 0.5) {
-      window.scrollBy({ top: delta, behavior: "auto" });
-    }
+    const rect = buttonRef.current.getBoundingClientRect();
+    const targetTop = window.scrollY + rect.top + rect.height / 2 - window.innerHeight / 2;
+    window.scrollTo({ top: Math.max(0, targetTop), behavior: "auto" });
+
     html.style.scrollBehavior = prevBehavior;
   }, [showAll, visible.length]);
 
