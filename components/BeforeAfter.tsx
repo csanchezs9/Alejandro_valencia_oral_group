@@ -343,7 +343,7 @@ export default function BeforeAfter() {
   const closeLightbox = useCallback(() => setLightbox(null), []);
 
   return (
-    <section className="relative pt-20 md:pt-28 pb-12 md:pb-16 bg-[color:var(--off-white)]">
+    <section className="relative py-20 md:py-28 bg-[color:var(--off-white)]">
       <div
         aria-hidden="true"
         className="absolute inset-x-0 top-0 h-20 pointer-events-none"
