@@ -34,7 +34,7 @@ export default function Services() {
   const hasMore = filtered.length > MAX_VISIBLE;
 
   return (
-    <section id="servicios" className="relative py-20 md:py-28 bg-[color:var(--off-white)]">
+    <section id="servicios" className="relative pt-10 md:pt-14 pb-10 md:pb-14 bg-[color:var(--off-white)]">
       <div className="px-5 sm:px-8 lg:px-16 xl:px-24 lg:pr-12">
         <Reveal className="max-w-2xl mb-12">
           <div className="text-xs uppercase tracking-[0.25em] text-[color:var(--turquoise-deep)] font-semibold mb-4">

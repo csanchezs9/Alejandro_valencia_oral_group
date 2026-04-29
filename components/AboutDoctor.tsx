@@ -6,7 +6,7 @@ import { clinic } from "@/lib/data/clinic";
 
 export default function AboutDoctor() {
   return (
-    <section id="sobre-mi" className="relative py-20 md:py-28 overflow-hidden">
+    <section id="sobre-mi" className="relative pt-10 md:pt-14 pb-20 md:pb-28 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-[color:var(--turquoise-soft)]/40 via-[color:var(--off-white)] to-white" />
       <div className="absolute right-0 top-0 w-1/3 h-full mesh-glow opacity-60 pointer-events-none" />
 
